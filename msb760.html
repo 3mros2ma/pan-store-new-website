@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <link rel="icon" href="logo panstore.jpg.jpg">
+<head>
+  <meta charset="UTF-8">
+  <title>h610</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <a href="GPU.html"></a>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f8f8f8;
+    }
+
+    /* الهيدر */
+    header {
+      background: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      border-bottom: 1px solid #ddd;
+    }
+    header .logo img {
+      height: 50px;
+    }
+    header .search-bar {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      margin: 0 20px;
+    }
+    header .search-bar input {
+      padding: 8px;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 5px 0 0 5px;
+      outline: none;
+    }
+    header .search-bar button {
+      padding: 8px 12px;
+      border: 1px solid #ccc;
+      border-left: none;
+      border-radius: 0 5px 5px 0;
+      background: #ff9800;
+      cursor: pointer;
+    }
+    header .account-links a {
+      margin: 0 5px;
+      color: #333;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    header .icons img {
+      margin-left: 10px;
+      cursor: pointer;
+    }
+
+    /* بانر */
+    .banner img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* تفاصيل المنتج */
+    .product-details {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      padding: 40px;
+      background: #fff;
+      margin: 20px;
+      border-radius: 10px;
+    }
+    .product-details img {
+      width: 400px;
+      max-width: 100%;
+      border-radius: 10px;
+    }
+    .product-info {
+      flex: 1;
+    }
+    .product-info h1 {
+      font-size: 28px;
+      margin-bottom: 15px;
+    }
+    .price {
+      color: #28a745;
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+    .description {
+      font-size: 16px;
+      line-height: 1.6;
+      margin-bottom: 25px;
+    }
+    .btn {
+      display: inline-block;
+      padding: 12px 20px;
+      border-radius: 25px;
+      font-weight: bold;
+      color: white;
+      text-decoration: none;
+      background: #ff9800;
+    }
+    .btn:hover {
+      background: #e68900;
+    }
+
+    /* منتجات مشابهة */
+    .related-products {
+      padding: 20px;
+    }
+    .related-products h2 {
+      margin-bottom: 20px;
+      font-size: 24px;
+    }
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+    .product-card {
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      text-align: center;
+      padding: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+    .product-card:hover {
+      transform: translateY(-5px);
+    }
+    .product-card img {
+      width: 150px;
+      height: 150px;
+      object-fit: contain;
+      margin-bottom: 10px;
+    }
+    .product-card h3 {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+    .product-card .price {
+      margin-bottom: 10px;
+    }
+    .buy-btn {
+      background: #007bff;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 25px;
+      text-decoration: none;
+    }
+    .buy-btn:hover {
+      background: #0056b3;
+    }
+
+    /* وسائل الدفع */
+    .payment-section {
+      background: white;
+      padding: 20px;
+      text-align: center;
+      margin-top: 30px;
+      box-shadow: 0 -2px 15px rgba(0,0,0,0.05);
+    }
+    .payment-icons img {
+      width: 60px;
+      margin: 10px;
+    }
+
+    @media (max-width: 768px) {
+      .product-details {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+      <script>
+function addToCart(name, price, img) {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  let existing = cart.find(p => p.name === name);
+
+  if (existing) {
+    existing.qty += 1;
+  } else {
+    cart.push({ name, price, img, qty: 1 });
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+  updateCartCount();
+}
+
+function updateCartCount() {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  document.getElementById("cartCount").innerText = cart.reduce((a, p) => a + p.qty, 0);
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+  const cartIcon = document.querySelector(".icons .icon img"); // صورة العربة
+  const cartCount = document.getElementById("cartCount");
+  let count = 0;
+
+  document.querySelectorAll(".add-to-cart").forEach(button => {
+    button.addEventListener("click", function(e) {
+      const product = e.target.closest(".product");
+      const img = product.querySelector("img");
+
+      // نسخة من صورة المنتج
+      const flyingImg = img.cloneNode(true);
+      flyingImg.classList.add("fly-image");
+      document.body.appendChild(flyingImg);
+
+      // مكان بداية الصورة (المنتج)
+      const imgRect = img.getBoundingClientRect();
+      flyingImg.style.left = imgRect.left + "px";
+      flyingImg.style.top = imgRect.top + "px";
+
+      // مكان العربة
+      const cartRect = cartIcon.getBoundingClientRect();
+
+      // force reflow
+      getComputedStyle(flyingImg).transform;
+
+      // انتقال
+      flyingImg.style.transform = `translate(${cartRect.left - imgRect.left}px, ${cartRect.top - imgRect.top}px) scale(0.2)`;
+      flyingImg.style.opacity = "0.5";
+
+      // بعد الأنيميشن
+      flyingImg.addEventListener("transitionend", () => {
+        flyingImg.remove();
+        count++;
+        cartCount.textContent = count;
+      });
+    });
+  });
+});
+</script>
+</head>
+<body>
+
+  <!-- الهيدر -->
+  <header>
+    <div class="logo">
+      <img src="logo panstore.jpg.jpg" alt="Logo">
+    </div>
+    <div class="search-bar">
+      <input type="text" placeholder="search...">
+      <button>🔍</button>
+    </div>
+    <div class="account-links">
+      <a href="#">Login</a>
+      <a href="#">Create Account</a>
+    </div>
+    <div class="icons">
+      <img src="pngtree-shopping-cart-convenient-icon-image_1287807.jpg" alt="cart" width="24">
+      <img src="free-user-icon-3296-thumb.png" alt="user" width="24">
+      <img src="free-heart-icon-3510-thumb.png" alt="heart" width="24">
+    </div>
+  </header>
+
+  <!-- بانر -->
+  <section class="banner">
+    <img src="bgmsi.png" alt="بانر ">
+  </section>
+
+  <!-- تفاصيل المنتج -->
+  <section class="product-details">
+    <img src="msb760.png" alt="msb760">
+    <div class="product-info">
+      <h1>MSI PRO B760M-E – Intel LGA 1700 DDR5 Motherboard, Supports 14th/13th/12th Gen
+</h1>
+      <p class="price">5,700</p>
+      <p class="description">
+لوحة أم عالية الأداء من MSI تدعم معالجات Intel جيل 14 / 13 / 12 بمقبس LGA1700.
+تدعم ذاكرة DDR5 ثنائية القناة حتى 6400+ MHz (OC)، مع تقنيات Core Boost لتوصيل طاقة محسّن، و Memory Boost لأداء أسرع في الرام.
+مزودة بمنافذ PCIe 4.0 M.2 للتخزين السريع، وتقنية .</p>
+      <p class="price">5,600 جنيه</p>
+<button class="btn cart-btn" onclick="addToCart({
+  id:'MSI PRO B760M-E – Intel LGA 1700 DDR5,',
+  name:'MSI PRO B760M-E – Intel LGA 1700 DDR5',
+  price:5600,
+  img:'msb760.png'
+})">
+  إضافة إلى العربة
+</button>
+    </div>
+  </section>
+
+  <!-- منتجات مشابهة -->
+  <section class="related-products">
+    <h2>كيسات مشابهة</h2>
+    <div class="products">
+      <div class="product-card">
+        <img src="b450.png" alt="b450">
+        <h3>MSI B450-A PRO MAX II ATX Motherboard – AMD Socket AM4 – Support 1st, 2nd & 3rd Gen Ryzen Processors 
+          (Including Ryzen 3000 & 5000 After BIOS Upgrade) M.2 – SATA Ports – USB 3.2 – Gigabit Ethernet</h3>
+        <p class="price">3,000 جنيه</p>
+        <a href="b450.html" target="_blank" class="buy-btn">تفاصيل</a>
+      </div>
+      <div class="product-card">
+        <img src="asb760.png" alt="13400">
+        <h3>ASUS Prime B760M-R D4 Micro-ATX Motherboard, LGA1700 Socket, Intel 14th/13th/12th Gen Support,
+           DDR4 up to 64GB, PCIe 4.0, Dual M.2, 2.5Gb,USB 3.2, Powerful Gaming Performance and Work</h3>
+        <p class="price">4,600 جنيه</p>
+        <a href="asb760.html" target="_blank" class="buy-btn">تفاصيل</a>
+      </div>
+      <div class="product-card">
+        <img src="gh610.png" alt="Xigmatek Sky II">
+        <h3>Gigabyte H610 Motherboard with 4+1+1 Hybrid Phases Digital VRM Design, PCIe 4.0* Design,
+ Gen3 x4 M.2, Anti-Sulfur Resistor, Smart Fan 6
+</h3>
+        <p class="price">4,100 جنيه</p>
+        <a href="gh610.html" target="_blank" class="buy-btn">تفاصيل</a>
+      </div>
+    </div>
+    
+  </section>
+
+  <!-- وسائل الدفع -->
+  <section class="payment-section">
+    <h3>طرق الدفع المتاحة</h3>
+    <div class="payment-icons">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" alt="Visa">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/b/b7/MasterCard_Logo.svg" alt="MasterCard">
+      <img src="1.png" alt="inta">
+      <img src="v2.png" alt="VCash">
+    </div>
+  </section>
+
+</body>
+</html>

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>750</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f8f8f8;
+    }
+
+    /* الهيدر */
+    header {
+      background: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      border-bottom: 1px solid #ddd;
+    }
+    header .logo img {
+      height: 50px;
+    }
+    header .search-bar {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      margin: 0 20px;
+    }
+    header .search-bar input {
+      padding: 8px;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 5px 0 0 5px;
+      outline: none;
+    }
+    header .search-bar button {
+      padding: 8px 12px;
+      border: 1px solid #ccc;
+      border-left: none;
+      border-radius: 0 5px 5px 0;
+      background: #ff9800;
+      cursor: pointer;
+    }
+    header .account-links a {
+      margin: 0 5px;
+      color: #333;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    header .icons img {
+      margin-left: 10px;
+      cursor: pointer;
+    }
+
+    /* بانر */
+    .banner img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* تفاصيل المنتج */
+    .product-details {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      padding: 40px;
+      background: #fff;
+      margin: 20px;
+      border-radius: 10px;
+    }
+    .product-details img {
+      width: 400px;
+      max-width: 100%;
+      border-radius: 10px;
+    }
+    .product-info {
+      flex: 1;
+    }
+    .product-info h1 {
+      font-size: 28px;
+      margin-bottom: 15px;
+    }
+    .price {
+      color: #28a745;
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+    .description {
+      font-size: 16px;
+      line-height: 1.6;
+      margin-bottom: 25px;
+    }
+    .btn {
+      display: inline-block;
+      padding: 12px 20px;
+      border-radius: 25px;
+      font-weight: bold;
+      color: white;
+      text-decoration: none;
+      background: #ff9800;
+    }
+    .btn:hover {
+      background: #e68900;
+    }
+
+    /* منتجات مشابهة */
+    .related-products {
+      padding: 20px;
+    }
+    .related-products h2 {
+      margin-bottom: 20px;
+      font-size: 24px;
+    }
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+    .product-card {
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      text-align: center;
+      padding: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+    .product-card:hover {
+      transform: translateY(-5px);
+    }
+    .product-card img {
+      width: 150px;
+      height: 150px;
+      object-fit: contain;
+      margin-bottom: 10px;
+    }
+    .product-card h3 {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+    .product-card .price {
+      margin-bottom: 10px;
+    }
+    .buy-btn {
+      background: #007bff;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 25px;
+      text-decoration: none;
+    }
+    .buy-btn:hover {
+      background: #0056b3;
+    }
+
+    /* وسائل الدفع */
+    .payment-section {
+      background: white;
+      padding: 20px;
+      text-align: center;
+      margin-top: 30px;
+      box-shadow: 0 -2px 15px rgba(0,0,0,0.05);
+    }
+    .payment-icons img {
+      width: 60px;
+      margin: 10px;
+    }
+
+    @media (max-width: 768px) {
+      .product-details {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+
+  <script>
+function addToCart(name, price, img) {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  let existing = cart.find(p => p.name === name);
+
+  if (existing) {
+    existing.qty += 1;
+  } else {
+    cart.push({ name, price, img, qty: 1 });
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+  updateCartCount();
+}
+
+function updateCartCount() {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  document.getElementById("cartCount").innerText = cart.reduce((a, p) => a + p.qty, 0);
+}
+</script>
+</head>
+<body>
+
+  <!-- الهيدر -->
+  <header>
+    <div class="logo">
+      <img src="logo panstore.jpg.jpg" alt="Logo">
+    </div>
+    <div class="search-bar">
+      <input type="text" placeholder="search...">
+      <button>🔍</button>
+    </div>
+    <div class="account-links">
+      <a href="#">Login</a>
+      <a href="#">Create Account</a>
+    </div>
+    <div class="icons">
+      <img src="pngtree-shopping-cart-convenient-icon-image_1287807.jpg" alt="cart" width="24">
+      <img src="free-user-icon-3296-thumb.png" alt="user" width="24">
+      <img src="free-heart-icon-3510-thumb.png" alt="heart" width="24">
+    </div>
+  </header>
+
+  <!-- بانر -->
+  <section class="banner">
+    <img src="gameb.png" alt="بانر ">
+  </section>
+
+  <!-- تفاصيل المنتج -->
+  <section class="product-details">
+    <img src="game.png" alt="game">
+    <div class="product-info">
+      <h1>GAMDIAS AURA GP750 Power Supply – 750W – 80+ White Efficiency
+         – 120mm Smart Cooling Fan – Multiple Electrical Protection – Non-Detachable ATX
+
+</h1>
+      <p class="price">2,500</p>
+      <p class="description">
+        مزود طاقة GAMDI.AS AURA GP750 بقوة 750 واط يتميز بكفاءة 80+ 
+        White (~80%) لتوفير طاقة مستقرة لجميع مكونات الكمبيوتر. مزود بمروحة ذكية 120مم للتبريد الفعال والهادئ،
+      </p>
+      <button class="btn cart-btn" onclick="addToCart('GAMDIAS AURA GP750 Power Supply – 750W – 80+ White Efficiency (~80%) – 120mm Smart Cooling Fan – Multiple Electrical Protection – Non-Detachable ATX Design ', 2,500 , 'case.jpg')">
+  أضف إلى السلة
+</button>
+    </div>
+  </section>
+
+  <!-- منتجات مشابهة -->
+  <section class="related-products">
+    <h2>سماعات مشابهة</h2>
+    <div class="products">
+      <div class="product-card">
+        <img src="h2002g.png" alt="h2002g">
+        <h3>Havit Gaming Headphone, Black & Green - 53mm Speaker, Omnidirectional Sound Pickup,
+             Adjustable Head Beam, Compatible with Gaming Devices, Multifunction Wire Control, Protein Leather Earmuffs
+</h3>
+        <p class="price">1,650 جنيه</p>
+        <a href="h2002g.html" target="_blank" class="buy-btn">تفاصيل</a>
+      </div>
+      <div class="product-card">
+        <img src="gh10.png" alt="13400">
+        <h3>HP gh10 Headphones with Microphone, Wired Gaming Headset for PC, Noise Reduction</h3>
+        <p class="price">550 جنيه</p>
+        <a href="gh10.html" target="_blank" class="buy-btn">تفاصيل</a>
+      </div>
+      <div class="product-card">
+        <img src="h510.png" alt="Xigmatek Sky II">
+        <h3>Redragon H510 Zeus-X Wired Gaming Headset with RGB Lighting – 7.1 Surround Sound –
+             53mm Audio Drivers – Comfortable Foam Ear Cushions with Cloth Cover – PC Compatible, PS4 – USB Powered
+</h3>
+        <p class="price">2,400 جنيه</p>
+        <a href="h510.html" target="_blank" class="buy-btn">تفاصيل</a>
+      </div>
+    </div>
+    
+  </section>
+
+  <!-- وسائل الدفع -->
+  <section class="payment-section">
+    <h3>طرق الدفع المتاحة</h3>
+    <div class="payment-icons">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" alt="Visa">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/b/b7/MasterCard_Logo.svg" alt="MasterCard">
+      <img src="1.png" alt="inta">
+      <img src="v2.png" alt="VCash">
+    </div>
+  </section>
+
+</body>
+</html>

@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="icon" href="logo panstore.jpg.jpg">
+<head>
+  <meta charset="UTF-8">
+  <title>Pro Gaming Mousepads</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    .page-title {
+      font-weight: bold;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    .products-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .row {
+      display: flex;
+      gap: 20px;
+    }
+    .product-box {
+      flex: 1;
+      background: #f8f8f8;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 10px;
+      text-align: center;
+    }
+    .product-box img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>RAM Products</title>
+  <style>
+    /* تصفير التنسيقات الافتراضية */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    /* هيدر ثابت */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: white;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 1000;
+    }
+
+    header .logo img {
+      height: 50px;
+    }
+
+    .search-bar {
+      display: flex;
+      align-items: center;
+    }
+    .search-bar input {
+      padding: 5px 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px 0 0 4px;
+    }
+    .search-bar button {
+      padding: 6px 10px;
+      border: none;
+      background: #007bff;
+      color: white;
+      border-radius: 0 4px 4px 0;
+      cursor: pointer;
+    }
+
+    .account-links a {
+      margin-left: 15px;
+      text-decoration: none;
+      color: #007bff;
+      font-weight: bold;
+    }
+
+    .icons {
+      display: flex;
+      gap: 10px;
+    }
+    .icons img {
+      cursor: pointer;
+    }
+
+    /* قسم المنتجات */
+    .products {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 25px;
+      padding: 120px 20px 20px; /* padding-top كبير للهيدر */
+    }
+    .product-card {
+      background: #fff;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      cursor: pointer;
+      text-align: center;
+      padding: 20px;
+    }
+    .product-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+    }
+    .product-image {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    .product-image img {
+      width: 150px;
+      height: 150px;
+      object-fit: contain;
+      transition: transform 0.4s ease;
+    }
+    .product-card:hover .product-image img {
+      transform: scale(1.1);
+    }
+    .product-link {
+      text-decoration: none;
+      color: #333;
+    }
+    .product-link:hover {
+      color: #007bff;
+    }
+    .product-info h3 {
+      margin-bottom: 10px;
+      font-size: 18px;
+    }
+    .price {
+      color: #28a745;
+      font-size: 20px;
+      font-weight: bold;
+    }
+    .cart-btn, .buy-btn {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 8px 15px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: bold;
+      color: white;
+      transition: background 0.3s ease;
+    }
+    .cart-btn {
+      background: #ff9800;
+    }
+    .cart-btn:hover {
+      background: #e68900;
+    }
+    .buy-btn {
+      background: #007bff;
+    }
+    .buy-btn:hover {
+      background: #0056b3;
+    }
+
+    /* موبايل */
+    @media (max-width: 768px) {
+      .products {
+        grid-template-columns: repeat(1, 1fr);
+      }
+    }
+  </style>
+
+  <script>
+function addToCart(name, price, img) {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  let existing = cart.find(p => p.name === name);
+
+  if (existing) {
+    existing.qty += 1;
+  } else {
+    cart.push({ name, price, img, qty: 1 });
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+  updateCartCount();
+}
+
+function updateCartCount() {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  document.getElementById("cartCount").innerText = cart.reduce((a, p) => a + p.qty, 0);
+}
+</script>
+
+
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <img src="logo panstore.jpg.jpg" alt="Logo">
+  </div>
+  <div class="search-bar">
+    <input type="text" placeholder="search...">
+    <button>🔍</button>
+  </div>
+  <div class="account-links">
+    <a href="#">Login</a>
+    <a href="#">Create Account</a>
+  </div>
+  <div class="icons">
+    <img src="pngtree-shopping-cart-convenient-icon-image_1287807.jpg" alt="cart" width="24">
+    <img src="free-user-icon-3296-thumb.png" alt="user" width="24">
+    <img src="free-heart-icon-3510-thumb.png" alt="heart" width="24">
+  </div>
+</header>
+
+<!-- المنتجات -->
+<div class="products">
+  <div class="product-card">
+    <div class="product-image">
+      <a href="havitbig.html" target="_blank">
+        <img src="havitbig.png" alt="منتج 1">
+      </a>
+    </div>
+    <div class="product-info">
+      <a href="havitbig.html" target="_blank" class="product-link">
+        <h3>
+    Havit HV-MP860 Mouse Pad | High Precision Smooth Surface | Non-Slip Rubber Base
+     | Waterproof Design | Large Size for Maximum Freedom of Movement 30*70 | Ideal for Gaming and Work
+</h3>
+      </a>
+      <p class="price">200 جنيه</p>
+      <button class="btn cart-btn" onclick="addToCart('Havt HV-MP860 Mouse Pad | High Precision Smooth Surface | Non-Slip Rubber Base | Waterproof Design | Large Size for Maximum Freedom of Movement | Ideal for Gaming and Work', 250, 'havitbig.png')">
+  أضف إلى السلة
+      </button>
+      <a href="havitbig.html" target="_blank" class="buy-btn">تفاصيل المنتج</a>
+    </div>
+  </div>
+
+<div class="product-card">
+    <div class="product-image">
+      <a href="black30.html" target="_blank">
+        <img src="black30.png" alt="منتج 3">
+      </a>
+    </div>
+    <div class="product-info">
+      <a href="black30.html" target="_blank" class="product-link">
+        <h3>RGB Gaming Mouse Pad Large Black Solid 80x30cm, 10 Lighting Modes, Waterproof 
+            Smooth Surface, Non-Slip Rubber Base, Professional Mouse Pad for PC Laptop
+</h3>
+      </a>
+      <p class="price">250 جنيه</p>
+      <button class="btn cart-btn" onclick="addToCart('RGB Gaming Mouse Pad Large Black Solid 80x30cm, 10 Lighting Modes, Waterproof Smooth Surface, Non-Slip Rubber Base, Professional Mouse Pad for PC Laptop', 250, 'case.jpg')">
+  أضف إلى السلة
+</button>
+      <a href="black30.html" target="_blank" class="buy-btn">تفاصيل المنتج</a>
+    </div>
+</div>
+
+
+  <div class="product-card">
+    <div class="product-image">
+      <a href="anm.html" target="_blank">
+        <img src="anm.png" alt="منتج 2">
+      </a>
+    </div>
+    <div class="product-info">
+      <a href="anm.html" target="_blank" class="product-link">
+        <h3>Large RGB Gaming Mouse Pad 30x80cm - Anime Samurai Warrior in Red Costume, Multicolor LED Lighting, Non-Slip Base, Smooth Gaming Surface, Waterproof, Durable Stitched Edges
+
+
+       </h3>
+      </a>
+      <p class="price">250 جنيه</p>
+      <button class="btn cart-btn" onclick="addToCart('Large RGB Gaming Mouse Pad 30x80cm - Anime Samurai Warrior in Red Costume, Multicolor LED Lighting, Non-Slip Base, Smooth Gaming Surface, Waterproof, Durable Stitched Edges', 250, 'case.jpg')">
+  أضف إلى السلة
+</button>
+      <a href="anm.html" target="_blank" class="buy-btn">تفاصيل المنتج</a>
+    </div>
+  </div>
+
+  <div class="product-card">
+    <div class="product-image">
+      <a href="white.html" target="_blank">
+        <img src="white.png" alt="منتج 3">
+      </a>
+    </div>
+    <div class="product-info">
+      <a href="white.html" target="_blank" class="product-link">
+        <h3> Large RGB Gaming Mouse Pad 30x80cm Multi Color LED Lighting, HD Printed Design, Soft Fabric Surface for
+             Control, Non-Slip Base, Waterproof, Durable Stitched Edges for Gaming and Work
+</h3>
+      </a>
+      <p class="price">250 جنيه</p>
+      <button class="btn cart-btn" onclick="addToCart('Large RGB Gaming Mouse Pad 30x80cm Multi Color LED Lighting, HD Printed Design, Soft Fabric Surface for Control, Non-Slip Base, Waterproof, Durable Stitched Edges for Gaming and Work', 250, 'case.jpg')">
+  أضف إلى السلة
+</button>
+      <a href="details3.html" target="_blank" class="buy-btn">تفاصيل المنتج</a>
+    </div>
+  </div>
+
+  <div class="product-card">
+    <div class="product-image">
+      <a href="map.html" target="_blank">
+        <img src="map.png" alt="منتج 3">
+      </a>
+    </div>
+    <div class="product-info">
+      <a href="map.html" target="_blank" class="product-link">
+        <h3>Large RGB Mouse Pad 80x30cm with 10 Lighting Modes, World Map Design,
+             Non-Slip Rubber Base, Waterproof Soft Surface for Computer Gaming, Laptop, Gamer, Office
+</h3>
+      </a>
+      <p class="price">250 جنيه</p>
+      <button class="btn cart-btn" onclick="addToCart('Large RGB Mouse Pad 80x30cm with 10 Lighting Modes, World Map Design, Non-Slip Rubber Base, Waterproof Soft Surface for Computer Gaming, Laptop, Gamer, Office', 250, 'case.jpg')">
+  أضف إلى السلة
+</button>
+      <a href="map.html" target="_blank" class="buy-btn">تفاصيل المنتج</a>
+    </div>
+</div>
+
+<div class="product-card">
+    <div class="product-image">
+      <a href="black40.html" target="_blank">
+        <img src="black40.png" alt="منتج 3">
+      </a>
+    </div>
+    <div class="product-info">
+      <a href="black40.html" target="_blank" class="product-link">
+        <h3>RGB Gaming Mouse Pad, 40x90cm, Multicolor LED Light, Soft Surface, Anti-Slip Base, Black
+
+</h3>
+      </a>
+      <p class="price">270 جنيه</p>
+      <button class="btn cart-btn" onclick="addToCart('RGB Gaming Mouse Pad, 40x90cm, Multicolor LED Light, Soft Surface, Anti-Slip Base, Black', 250, 'case.jpg')">
+  أضف إلى السلة
+</button>
+      <a href="black40.html" target="_blank" class="buy-btn">تفاصيل المنتج</a>
+    </div>
+</div>
+
+<div class="product-card">
+    <div class="product-image">
+      <a href="havit.html" target="_blank">
+        <img src="havit.png" alt="منتج 3">
+      </a>
+    </div>
+    <div class="product-info">
+      <a href="havit.html" target="_blank" class="product-link">
+        <h3>Havit Hv-MP837 Non-Slip Rubber Gaming Mouse Pad, Black, Small
+
+</h3>
+      </a>
+      <p class="price">120 جنيه</p>
+      <button class="btn cart-btn" onclick="addToCart('Havit Hv-MP837 Non-Slip Rubber Gaming Mouse Pad, Black, Small', 120, 'case.jpg')">
+  أضف إلى السلة
+</button>
+      <a href="havit.html" target="_blank" class="buy-btn">تفاصيل المنتج</a>
+    </div>
+</div>
+
+</body>
+</html>
