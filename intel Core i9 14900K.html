@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+    <link rel="icon" href="logo panstore.jpg.jpg">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Intel Core i9 14900KF 3.2GHz 24-Core LGA 1700 14th Gen  - تفاصيل المنتج</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+   body {
+  font-family: Arial, sans-serif;
+  margin: 0px;
+  padding: 0;
+}
+
+    header, nav, main, footer {
+      padding: 10px 20px;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f4f4f4;
+      border-bottom: 1px solid #ccc;
+        flex-direction: row-reverse; /* يعكس ترتيب العناصر */
+    }
+    .logo {
+      margin-right: auto;
+      margin-left: 10px;
+    }
+    .logo img {
+      height: 60px;
+      width: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    nav {
+      background: #007BFF;
+      font-size: 14px;
+      border-radius: 8px;
+      color: white;
+    }
+    nav p span {
+      display: none;
+    }
+    nav p:hover span {
+      display: inline;
+    }
+    nav p {
+      background-color: #007BFF;
+      color: white;
+      margin: 0;
+      padding: 5px 10px;
+      border-radius: 8px;
+      display: inline-block;
+    }
+.search-bar {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border: 1px solid #ccc;   /* البوكس الخارجي */
+  border-radius: 25px;
+  padding: 10px 15px;
+  width: 600px;             /* الطول */
+  margin: 0 20px;
+}
+
+.search-bar input {
+  flex: 1;
+  border: none;             /* يشيل المربع الصغير */
+  outline: none;            /* يشيل التحديد الأزرق */
+  background: transparent;  /* يشيل أي خلفية */
+  font-size: 16px;
+  padding: 0;               /* يلغي أي فراغ داخلي */
+}
+
+.search-bar button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: #555;
+  padding: 0;
+}
+
+
+
+    .account-links {
+      margin: 0 20px;
+      white-space: nowrap;
+    }
+    .account-links a {
+      margin: 0 40px;
+      text-decoration: none;
+      color: #000;
+      font-size: 14px;
+    }
+    /* بانر */
+    .banner img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+
+    }
+
+    /* تفاصيل المنتج */
+    .product-details {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      padding: 40px;
+      background: #fff;
+      margin: 20px;
+      border-radius: 10px;
+    }
+    .product-details img {
+      width: 400px;
+      max-width: 100%;
+      border-radius: 10px;
+    }
+    .product-info {
+      flex: 1;
+    }
+    .product-info h1 {
+      font-size: 28px;
+      margin-bottom: 15px;
+    }
+    .price {
+      color: #28a745;
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+    .description {
+      font-size: 16px;
+      line-height: 1.6;
+      margin-bottom: 25px;
+    }
+    .btn {
+      display: inline-block;
+      padding: 12px 20px;
+      border-radius: 25px;
+      font-weight: bold;
+      color: white;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+    .cart-btn {
+      background: #ff9800;
+    }
+    .cart-btn:hover {
+      background: #e68900;
+    }
+
+    /* جدول المواصفات */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    table th, table td {
+      padding: 10px;
+      border: 1px solid #ddd;
+      text-align: right;
+    }
+    table th {
+      background: #f2f2f2;
+    }
+
+    /* منتجات مشابهة */
+    .related-products {
+      padding: 20px;
+    }
+    .related-products h2 {
+      margin-bottom: 20px;
+      font-size: 24px;
+    }
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+    .product-card {
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      text-align: center;
+      padding: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+    .product-card:hover {
+      transform: translateY(-5px);
+    }
+    .product-card img {
+      width: 150px;
+      height: 150px;
+      object-fit: contain;
+      margin-bottom: 10px;
+    }
+    .product-card h3 {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+    .product-card .price {
+      margin-bottom: 10px;
+    }
+    .buy-btn {
+      background: #007bff;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 25px;
+      text-decoration: none;
+    }
+    .buy-btn:hover {
+      background: #0056b3;
+    }
+
+    /* وسائل الدفع */
+    .payment-section {
+      background: white;
+      padding: 20px;
+      text-align: center;
+      margin-top: 30px;
+      box-shadow: 0 -2px 15px rgba(0,0,0,0.05);
+    }
+    .payment-icons img {
+      width: 60px;
+      margin: 10px;
+    }
+
+    /* موبايل */
+    @media (max-width: 768px) {
+      .product-details {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+
+.modal-overlay {
+  display: none; 
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 400px;
+  width: 100%;
+}
+
+
+    .add-to-cart.added {
+  background: #28a745 !important;
+  position: relative;
+}
+.icon {
+  position: relative;
+}
+
+#cartCount {
+  position: absolute;
+  top: -15px;   /* يخليها فوق الأيقونة */
+  right: -5px; /* يخليها ناحية اليمين */
+  background: red;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+  </style>
+      <script>
+function addToCart(name, price, img) {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  let existing = cart.find(p => p.name === name);
+
+  if (existing) {
+    existing.qty += 1;
+  } else {
+    cart.push({ name, price, img, qty: 1 });
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+  updateCartCount();
+}
+
+function updateCartCount() {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  document.getElementById("cartCount").innerText = cart.reduce((a, p) => a + p.qty, 0);
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+  const cartIcon = document.querySelector(".icons img"); 
+  const cartCount = document.getElementById("cartCount");
+  let count = 0;
+  
+  document.querySelectorAll(".add-to-cart").forEach(button => {
+    button.addEventListener("click", function(e) {
+      const btn = e.target;
+
+      // احفظ النص الأصلي
+      const originalText = btn.textContent;
+
+      // غير النص واللون
+      btn.textContent = "✔ تمت الإضافة";
+      btn.classList.add("added");
+
+      // بعد ثانية ونص يرجع تاني
+      setTimeout(() => {
+        btn.classList.remove("added");
+        btn.textContent = originalText;
+      }, 1500);
+    });
+  });
+});
+
+
+
+
+
+function openModal(id){
+  document.getElementById(id).style.display = "flex";
+}
+function closeModal(id){
+  document.getElementById(id).style.display = "none";
+}
+
+document.addEventListener("DOMContentLoaded", updateCartCount);
+
+</script>
+</head>
+<body>
+
+  <!-- الهيدر -->
+<header>
+<div class="logo">
+  <a href="index.html">
+    <img src="logo panstore.jpg.jpg" alt="Logo">
+  </a>
+</div>
+
+
+<div class="search-bar">
+  <input type="text" id="searchInput" placeholder="search...">
+  <button onclick="searchProduct()">search</button>
+</div>
+
+<div class="account-links">
+  <a href="#" onclick="openModal('loginModal')">Login</a>
+  <a href="#" onclick="openModal('signupModal')">Create Account</a>
+</div>
+<div class="icons">
+         <a href="cart.html" class="icon" title="السلة">
+             <img src="pngtree-shopping-cart-convenient-icon-image_1287807.jpg" width="24">
+             <span id="cartCount">0</span>
+         </a>
+</div>
+    <div class="icon"><img src="free-user-icon-3296-thumb.png" alt="user" width="24"></div>
+    <div class="icon" onclick="toggleLike()">
+      <img src="free-heart-icon-3510-thumb.png" alt="heart" width="24">
+      <span class="count" id="like-count">0</span>
+    </div>
+  </div>
+</header>
+<!-- ===== Login Modal ===== -->
+<div id="loginModal" class="modal-overlay">
+  <div class="modal">
+    <button onclick="closeModal('loginModal')">&times;</button>
+    <h2>Login</h2>
+    <form>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" required>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" required>
+      </div>
+      <button type="submit" class="primary">Login</button>
+    </form>
+  </div>
+</div>
+
+<!-- ===== Signup Modal ===== -->
+<div id="signupModal" class="modal-overlay">
+  <div class="modal">
+    <button onclick="closeModal('signupModal')">&times;</button>
+    <h2>Create Account</h2>
+    <form>
+      <div class="form-group">
+        <label>User Name</label>
+        <input type="text" required>
+      </div>
+      <div class="form-group">
+        <label>Phone</label>
+        <input type="tel" required>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" required>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" required>
+      </div>
+      <button type="submit" class="primary">Create Account</button>
+    </form>
+  </div>
+</div>
+
+<!-- ===== Cart Modal ===== -->
+<div id="cartModal" class="modal-overlay">
+  <div class="modal">
+    <button onclick="closeModal('cartModal')">&times;</button>
+    <h2>🛒 عربة التسوق</h2>
+    <p>السلة حالياً فارغة</p>
+  </div>
+</div>
+  <!-- بانر -->
+  <section class="banner">
+    <img src="61f8hqeg-dL._UF894,1000_QL80_.jpg" alt="Intel Core i9 14900KF">
+  </section>
+
+  <!-- تفاصيل المنتج -->
+  <section class="product-details">
+    <img src="PROSESSORE-ICON.JPG" alt="Kingston Fury Beast RGB 1x8GB-P3200" style="width: 500px;">
+    <div class="product-info">
+      <h1>Intel Core i9 14900KF 3.2GHz 24-Core LGA 1700 14th Gen Processor, 24 Cores & 32 Threads, 36MB Cache Memory,</h1>
+      <p class="price">22.900 جنيه</p>
+      <p class="description">
+Hyper-Threading Technology: Enhances multitasking performance by allowing each core to handle two tasks simultaneously.
+Intel Turbo Boost Max Technology: Automatically boosts the clock speed of the fastest cores based on workload demands.
+      </p>
+
+      <!-- جدول المواصفات -->
+      <table>
+        <tr>
+          <th>Processor Series</th>
+          <td>Intel Core i9 14th Generation (Alder Lake-S)</td>
+        </tr>
+        <tr>
+          <th>Socket</th>
+          <td>LGA 1700</td>
+        </tr>
+        <tr>
+          <th>Manufacturing Technology:</th>
+          <td>Intel 7 (10nm SuperFin)</td>
+        </tr>
+        <tr>
+          <th>Number of Cores</th>
+          <td>24</td>
+        </tr>
+        <tr>
+          <th>Number of Threads</th>
+          <td>32 </td>
+        </tr>
+      </table>
+
+<button class="btn cart-btn add-to-cart" onclick="addToCart('ram kingston fury beast rgb 1x8gb p3200',1350,'king2.jpg')">
+  إضافة إلى العربة
+</button>
+    </div>
+  </section>
+
+  <!-- منتجات مشابهة -->
+  <section class="related-products">
+    <h2>منتجات مشابهة</h2>
+    <div class="products">
+      <div class="product-card">
+        <img src="14400.png" alt="Intel Core i5-14400F">
+        <h3>Intel Core i5-14400F</h3>
+        <p class="price">7.100 جنيه</p>
+        <a href="14400.html" target="_blank" class="buy-btn">تفاصيل</a>
+      </div>
+      <div class="product-card">
+        <img src="13400.png" alt="Intel Core i5-13400F">
+        <h3>Intel Core i5-13400F</h3>
+        <p class="price">6.700 جنيه</p>
+        <a href="13400.html" target="_blank" class="buy-btn">تفاصيل</a>
+      </div>
+      <div class="product-card">
+        <img src="12400.png" alt="Intel Core i5-12400F 6C/12T, 2.5-4.4GHz, 18MB Cache">
+        <h3>Intel Core i5-12400F 6C/12T, 2.5-4.4GHz, 18MB Cache</h3>
+        <p class="price">5.600 جنيه</p>
+        <a href="12400.html" target="_blank" class="buy-btn">تفاصيل</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- وسائل الدفع -->
+  <section class="payment-section">
+    <h3>طرق الدفع المتاحة</h3>
+    <div class="payment-icons">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" alt="Visa">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b7/MasterCard_Logo.svg" alt="MasterCard">
+        <img src="1.png" alt="inta">
+        <img src="v2.png" alt="VCash">
+    </div>
+  </section>
+
+</body>
+</html>

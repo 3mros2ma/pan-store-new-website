@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="logo panstore.jpg.jpg">
+  <title>My Cart</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0; padding: 0;
+      background: #fffaf7;
+    }
+
+    header {
+      background: #111;
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header a { color: white; text-decoration: none; margin-left: 15px; }
+
+    main {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    /* قسم المنتجات */
+    .cart-items {
+      flex: 2;
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,.1);
+    }
+    .cart-items h2 { margin-bottom: 15px; }
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #eee;
+      padding: 10px 0;
+    }
+    .cart-item img {
+      width: 80px; height: 80px;
+      object-fit: cover;
+      border-radius: 6px;
+      margin-right: 15px;
+    }
+    .item-info { flex: 1; }
+    .item-info h4 { margin: 0; }
+    .item-info p { margin: 4px 0; color: #666; font-size: 14px; }
+    .quantity {
+      display: flex; align-items: center; gap: 5px;
+    }
+    .quantity button {
+      width: 25px; height: 25px;
+      border: 1px solid #ccc; background: white;
+      cursor: pointer; border-radius: 4px;
+    }
+    .remove { color: red; cursor: pointer; font-size: 14px; }
+
+    /* ملخص الطلب */
+    .order-summary {
+      flex: 1;
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,.1);
+    }
+    .order-summary h3 { margin-bottom: 15px; }
+    .order-summary p {
+      display: flex; justify-content: space-between;
+      margin: 8px 0; font-size: 14px;
+    }
+    .total {
+      font-weight: bold; font-size: 16px;
+      border-top: 1px solid #eee;
+      margin-top: 15px; padding-top: 10px;
+    }
+    .checkout-btn {
+      width: 100%; padding: 12px;
+      background: #ff6600; color: white;
+      border: none; border-radius: 6px;
+      font-size: 16px; margin-top: 15px;
+      cursor: pointer;
+    }
+    .checkout-btn:hover { background: #e65c00; }
+
+    /* الكوبون */
+    .coupon {
+      margin-bottom: 20px;
+    }
+    .coupon input {
+      width: 70%; padding: 8px;
+      border: 1px solid #ccc; border-radius: 4px;
+    }
+    .coupon button {
+      padding: 9px 15px; margin-left: 5px;
+      background: black; color: white;
+      border: none; border-radius: 4px;
+      cursor: pointer;
+    }
+  </style>
+<script>
+function renderCart() {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  let container = document.getElementById("cartItems");
+  let subtotal = 0;
+
+  container.innerHTML = "";
+  cart.forEach((item, i) => {
+    subtotal += item.price * item.qty;
+    container.innerHTML += `
+      <div class="cart-item">
+        <img src="${item.img}" width="60">
+        <strong>${item.name}</strong> - ${item.price} EGP
+        <div>
+          <button onclick="changeQty(${i}, -1)">-</button>
+          ${item.qty}
+          <button onclick="changeQty(${i}, 1)">+</button>
+        </div>
+        <span class="remove" onclick="removeItem(${i})">Remove</span>
+      </div>
+    `;
+  });
+
+  // ✅ تحديث ملخص الطلب
+  document.getElementById("subtotal").innerText = subtotal + " EGP";
+  document.getElementById("tax").innerText = "0 EGP";
+  document.getElementById("grandTotal").innerText = subtotal + " EGP";
+  document.getElementById("cartTotal").innerText = "Total: " + subtotal + " EGP";
+
+  // ✅ نخزن الإجمالي في localStorage
+  localStorage.setItem("cartSubtotal", subtotal);
+}
+
+function changeQty(index, delta) {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  cart[index].qty += delta;
+  if (cart[index].qty <= 0) cart.splice(index, 1);
+  localStorage.setItem("cart", JSON.stringify(cart));
+  renderCart();
+}
+
+function removeItem(index) {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  cart.splice(index, 1);
+  localStorage.setItem("cart", JSON.stringify(cart));
+  renderCart();
+}
+
+document.addEventListener("DOMContentLoaded", renderCart);
+
+
+</script>
+</head>
+<body>
+
+<header>
+  <div>🛍️ Panstore</div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="cart.html">Cart</a>
+    <a href="#">Login</a>
+  </nav>
+</header>
+
+<main>
+  <!-- 🛒 المنتجات -->
+  <div class="cart-items">
+    <h2>My Cart <span id="cartCountTitle"></span></h2>
+
+    <!-- هنا المنتجات هتتضاف ديناميك -->
+    <div id="cartItems"></div>
+
+    <!-- هنا الإجمالي -->
+    <div id="cartTotal"></div>
+  </div>
+
+  <!-- 📋 ملخص الطلب -->
+  <div class="order-summary">
+    <div class="coupon">
+      <input type="text" placeholder="Coupon code" id="couponInput">
+      <button onclick="calcTotals()">Apply</button>
+    </div>
+
+    <h3>Your Order</h3>
+    <p><span>Subtotal</span> <span id="subtotal">$0</span></p>
+
+    <p><span>Tax</span> <span id="tax">$0</span></p>
+    <div class="total">
+      <span>Total Payable</span> <span id="grandTotal">$0</span>
+    </div>
+    <a href="checkout_with_popup.html">
+    <button class="checkout-btn">Proceed to Checkout</button>
+    </a>
+  </div>
+</main>
+</body>
+</html>

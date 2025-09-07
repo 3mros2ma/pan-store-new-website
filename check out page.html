@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="logo panstore.jpg.jpg">
+  <title>My Cart</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0; padding: 0;
+      background: #f9f9f9;
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 20px;
+      padding: 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    /* ===== Shipping & Payment ===== */
+    .form-box {
+      background: #fff;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .form-box h3 { margin-bottom: 15px; }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 15px;
+    }
+    .form-group label {
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+    .form-group input, 
+    .form-group select {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    .form-inline {
+      display: flex;
+      gap: 10px;
+    }
+
+    /* Payment methods */
+.payment-methods {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.payment-method {
+  flex: 1;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  text-align: center;
+  padding: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease; /* الحركة السلسة */
+}
+
+.payment-method.active {
+  border-color: #007bff;
+  background: #eaf3ff;
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.3);
+}
+
+
+    /* ===== Order Summary ===== */
+    .order-summary {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,.1);
+
+  position: fixed;
+  top: 20px;      /* مسافة من فوق */
+  right: 20px;    /* يفضل دايمًا على يمين الشاشة */
+  width:400px;   /* لازم تحدد عرض ثابت علشان مايبقاش عايم */
+}
+    .order-summary h3 { margin-bottom: 15px; }
+    .order-summary p {
+      display: flex; justify-content: space-between;
+      margin: 8px 0; font-size: 14px;
+    }
+    .total {
+      font-weight: bold; font-size: 16px;
+      border-top: 1px solid #eee;
+      margin-top: 15px; padding-top: 10px;
+    }
+    .checkout-btn {
+      width: 100%; padding: 12px;
+      background:#ff6600; color:  white;
+      border: none; border-radius: 6px;
+      font-size: 16px; margin-top: 15px;
+      cursor: pointer;
+    }
+    .checkout-btn:hover { background: #5548d9; }
+  </style>
+
+
+  <script>
+document.addEventListener("DOMContentLoaded", function () {
+  const subtotal = parseInt(localStorage.getItem("cartSubtotal")) || 0;
+  const shippingElement = document.getElementById("checkout-shipping");
+  const subtotalElement = document.getElementById("checkout-subtotal");
+  const totalElement = document.getElementById("checkout-total");
+  const citySelect = document.getElementById("city");
+
+  let shipping = 0;
+
+  // عرض الـ subtotal في الأول
+  subtotalElement.innerText = subtotal + " EGP";
+  shippingElement.innerText = shipping + " EGP";
+  totalElement.innerText = (subtotal + shipping) + " EGP";
+
+  // لو العميل اختار مدينة → الشحن يبقى 100
+  citySelect.addEventListener("change", function () {
+    if (this.value !== "") {
+      shipping = 100;
+    } else {
+      shipping = 0;
+    }
+
+    shippingElement.innerText = shipping + " EGP";
+    totalElement.innerText = (subtotal + shipping) + " EGP";
+  });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  const methods = document.querySelectorAll(".payment-method");
+
+  methods.forEach(method => {
+    method.addEventListener("mouseenter", () => {
+      methods.forEach(m => m.classList.remove("active")); // يشيل الأزرق من الكل
+      method.classList.add("active"); // يضيفه للي عليه الماوس
+    });
+  });
+});
+
+
+function closePopup(){
+  document.getElementById("orderPopup").style.display = "none";
+}
+
+document.querySelector(".checkout-btn").addEventListener("click", function(e){
+  e.preventDefault();
+
+  const name   = document.querySelector('input[placeholder="First & Last Name"]').value.trim();
+  const addr   = document.querySelector('input[placeholder="421, cairo Main St"]').value.trim();
+  const phone  = document.querySelectorAll('input[placeholder="01000000000"]')[0].value.trim();
+  const city   = document.querySelectorAll("select")[0].value;
+  const state  = document.querySelectorAll("select")[1].value;
+  const payment = document.querySelector(".payment-method.active")?.innerText || "Not Selected";
+
+  const subtotal = document.getElementById("checkout-subtotal").innerText.replace(" EGP","");
+  const shipping = document.getElementById("checkout-shipping").innerText.replace(" EGP","");
+  const total    = document.getElementById("checkout-total").innerText.replace(" EGP","");
+
+  if(!name || !addr || !phone || city === "Select city" || state === "Select Governorate"){
+    alert("⚠ برجاء إكمال جميع البيانات");
+    return;
+  }
+
+  // ✅ API بتاع Google Sheets
+  const API_URL = "https://script.google.com/macros/s/AKfycbwmScJpzXb2CrCxO5zjmwyfRxnYNUm-TDiok0_hNWPjfJudCY86M-Phb01hLQZkW3b-/exec";
+
+  fetch(API_URL, {
+    method: "POST",
+    body: JSON.stringify({name, addr, phone, city, state, payment, subtotal, shipping, total}),
+    headers: {"Content-Type": "application/json"}
+  })
+  .then(res => res.json())
+  .then(data => {
+    if(data.success){
+      document.getElementById("orderPopup").style.display = "flex";
+    } else {
+      alert("❌ حصل خطأ في إرسال البيانات");
+    }
+  })
+  .catch(err => {
+    console.error(err);
+    alert("⚠ مشكلة في الاتصال بالسيرفر");
+  });
+});
+  </script>
+</head>
+<body>
+<!-- ✅ Popup بعد إتمام الطلب -->
+<div id="orderPopup" style="
+  display:none; 
+  position:fixed; 
+  inset:0; 
+  background:rgba(0,0,0,0.6); 
+  justify-content:center; 
+  align-items:center;
+  z-index:10000;">
+  <div style="background:#fff; padding:20px; border-radius:12px; text-align:center; width:350px;">
+    <h3>✅ لقد تم استلام طلب سيادتكم</h3>
+    <p>سيتم التواصل معكم على واتس اب لتأكيد الاوردر.<br>شكراً لزيارتكم موقعنا 🙏</p>
+
+    <!-- ⭐⭐⭐⭐ تقييم -->
+    <div style="margin:15px 0;">
+      <span class="star" style="font-size:24px; cursor:pointer;">⭐</span>
+      <span class="star" style="font-size:24px; cursor:pointer;">⭐</span>
+      <span class="star" style="font-size:24px; cursor:pointer;">⭐</span>
+      <span class="star" style="font-size:24px; cursor:pointer;">⭐</span>
+      <span class="star" style="font-size:24px; cursor:pointer;">⭐</span>
+    </div>
+
+    <button onclick="closePopup()" style="padding:10px 15px; background:#007bff; color:#fff; border:none; border-radius:6px; cursor:pointer;">
+      إغلاق
+    </button>
+  </div>
+</div>
+
+<main>
+  <!-- اليسار -->
+  <div>
+    <!-- Shipping Address -->
+    <div class="form-box">
+      <h3>Shipping Address</h3>
+      <div class="form-group">
+        <label>Name</label>
+        <input type="text" placeholder="First & Last Name">
+      </div>
+      <div class="form-group">
+        <label>Address 1</label>
+        <input type="text" placeholder="421, cairo Main St">
+      </div>
+      <div class="form-group">
+        <label>phone number (رقم هاتف)</label>
+        <input type="number" placeholder="01000000000">
+      </div>
+      <div class="form-group">
+        <label> number+whatsapp (  رقم واتس اب)</label>
+        <input type="number" placeholder="01000000000">
+      </div>
+      <div class="form-inline">
+        <div class="form-group" style="flex:1">
+          <label>city</label>
+
+<select>
+  <option>Select city</option>
+  <option>Cairo</option>
+  <option>Giza</option>
+  <option>Alexandria</option>
+  <option>Mansoura</option>
+  <option>Zagazig</option>
+  <option>Tanta</option>
+  <option>Ismailia</option>
+  <option>Port Said</option>
+  <option>Suez</option>
+  <option>Damietta</option>
+  <option>Shibin El Kom</option>
+  <option>Banha</option>
+  <option>Fayoum</option>
+  <option>Beni Suef</option>
+  <option>Minya</option>
+  <option>Asyut</option>
+  <option>Sohag</option>
+  <option>Qena</option>
+  <option>Luxor</option>
+  <option>Aswan</option>
+  <option>Hurghada</option>
+  <option>Sharm El Sheikh</option>
+  <option>Kafr El Sheikh</option>
+  <option>El Arish</option>
+  <option>Matrouh</option>
+  <option>New Damietta</option>
+  <option>New Cairo</option>
+  <option>6th of October City</option>
+  <option>Obour</option>
+  <option>Sadat City</option>
+  <option>New Minya</option>
+  <option>New Assiut</option>
+</select>
+        </div>
+        <div class="form-group" style="flex:1">
+          <label>State</label>
+<select>
+  <option>Select Governorate</option>
+  <option>Cairo</option>
+  <option>Giza</option>
+  <option>Alexandria</option>
+  <option>Red Sea</option>
+  <option>Beheira</option>
+  <option>Fayoum</option>
+  <option>Gharbia</option>
+  <option>Ismailia</option>
+  <option>Menofia</option>
+  <option>Minya</option>
+  <option>Qaliubiya</option>
+  <option>New Valley</option>
+  <option>Suez</option>
+  <option>Aswan</option>
+  <option>Asyut</option>
+  <option>Beni Suef</option>
+  <option>Dakahlia</option>
+  <option>Damietta</option>
+  <option>South Sinai</option>
+  <option>Kafr El Sheikh</option>
+  <option>Matrouh</option>
+  <option>Luxor</option>
+  <option>Qena</option>
+  <option>North Sinai</option>
+  <option>Sohag</option>
+  <option>Port Said</option>
+</select>
+        </div>
+        <div class="form-group" style="flex:1">
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Payment Method -->
+    <div class="form-box">
+      <h3>Payment Method</h3>
+      <div class="payment-methods">
+        <div class="payment-method active">instapy </div>
+        <div class="payment-method">Wallet (محفظه الكترونيه)</div>
+        <div class="payment-method">COD (الدفع عند الاستلام)</div>
+      </div>
+
+
+
+  
+  <!-- اليمين -->
+  <div class="order-summary">
+    <h3>Order Summary</h3>
+    <p>Subtotal: <span id="checkout-subtotal">0 EGP</span></p>
+    <p>Shipping: <span id="checkout-shipping">0 EGP</span></p>
+    <p>Tax: <span id="checkout-tax">0 EGP</span></p>
+    <p class="total">Total Payable: <span id="checkout-total">0 EGP</span></p>
+    <button class="checkout-btn">Place Order</button>
+  </div>
+</main>
+
+
+</body>
+</html>

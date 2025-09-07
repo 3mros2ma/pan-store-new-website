@@ -1,0 +1,1646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>pan-store</title>
+  <link rel="icon" href="logo panstore.jpg.jpg">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <style>
+body {
+  font-family: Arial, sans-serif;
+  margin: 0px;
+  padding: 0;
+}
+
+    header, nav, main, footer {
+      padding: 10px 20px;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f4f4f4;
+      border-bottom: 1px solid #ccc;
+    }
+    .logo {
+      margin-right: auto;
+      margin-left: 10px;
+    }
+    .logo img {
+      height: 60px;
+      width: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    nav {
+      background: #007BFF;
+      font-size: 14px;
+      border-radius: 8px;
+      color: white;
+    }
+    nav p span {
+      display: none;
+    }
+    nav p:hover span {
+      display: inline;
+    }
+    nav p {
+      background-color: #007BFF;
+      color: white;
+      margin: 0;
+      padding: 5px 10px;
+      border-radius: 8px;
+      display: inline-block;
+    }
+.search-bar {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border: 1px solid #ccc;   /* البوكس الخارجي */
+  border-radius: 25px;
+  padding: 10px 15px;
+  width: 800px;             /* الطول */
+  margin: 0 100px;
+}
+
+.search-bar input {
+  flex: 1;
+  border: none;             /* يشيل المربع الصغير */
+  outline: none;            /* يشيل التحديد الأزرق */
+  background: transparent;  /* يشيل أي خلفية */
+  font-size: 16px;
+  padding: 0;               /* يلغي أي فراغ داخلي */
+}
+
+.search-bar button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: #555;
+  padding: 0;
+}
+
+
+
+    .account-links {
+      margin: 0 20px;
+      white-space: nowrap;
+    }
+    .account-links a {
+      margin: 0 40px;
+      text-decoration: none;
+      color: #000;
+      font-size: 14px;
+    }
+    .icons {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    .icon {
+      font-size: 20px;
+      cursor: pointer;
+      position: relative;
+    }
+    .icon .count {
+      position: absolute;
+      top: -8px;
+      right: -10px;
+      background: red;
+      color: white;
+      font-size: 10px;
+      border-radius: 50%;
+      padding: 2px 5px;
+    }
+    main {
+      padding: 0;
+.full-image {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  display: block;
+  border-radius: 10px;
+  border: 3px solid #ccc;
+  margin-top: 10px;
+}
+    }
+
+    .slider {
+  transition: opacity 0.5s ease;
+}
+
+.carousel {
+  overflow: hidden;
+  width: 100%;
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 1s ease-in-out;
+}
+
+.offer-box {
+  min-width: 100%;
+  max-width: 100%;
+  text-align: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.offer-box img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+}
+
+    .section-title {
+      font-weight: bold;
+      margin: 20px 0 10px;
+    }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 أعمدة */
+  gap: 5px; /* مسافة بسيطة بين البوكسات */
+}
+
+.box {
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  text-align: center;
+  font-size: 16px;
+  padding: 100px;
+  height: 280px; /* ارتفاع ثابت */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.box img {
+  max-width: 100%;
+  max-height: 200px; /* ارتفاع الصورة داخل البوكس */
+  object-fit: contain; /* يخلي الصورة تبين كاملة بدون قص */
+  display: block;
+  margin: 0 auto;
+}
+
+.box p {
+  margin: 0;
+  padding: 15px;
+}
+
+
+
+
+    .brands {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 10px;
+    }
+
+.brand-item {
+  padding: 10px;
+  background: none;
+  border-radius: 0;
+  text-align: center;
+}
+.brand-item img {
+  width: 80px;
+  height: auto;
+  object-fit: contain;
+}
+
+
+    @media (max-width: 600px) {
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .latest-products {
+        grid-template-columns: 1fr;
+      }
+    }
+
+
+
+
+
+*{
+  padding: 0;
+  margin: 0; 
+  box-sizing: border-box;
+}
+footer {
+  background-color: #001d3b;
+}
+
+.footer-container{
+  width: 100%;
+  padding: 70px 30px 20px;
+
+}
+.socialicons{
+  display: flex;
+  justify-content: center;
+}
+.socialicons a{
+text-decoration: none;
+padding: 10px;
+background-color: white;
+margin: 10px;
+border-radius: 50%;
+}
+.socialicons a i{
+font-size: 2em;
+color: black;
+opacity: 0.9;
+}
+/*hover effects on social media icons*/
+.socialicons a:hover{
+  background-color: #111;
+  transition: 0.5s;
+}
+.socialicons a:hover i{
+  color: white;
+  transition: 0.5s;
+}
+.footernav{
+  margin: 30px 0;
+}
+.footernav ul{
+  display: flex;
+  justify-content: center;
+}
+.footernav ul li a{
+  color: white;
+  margin: 20px;
+  text-decoration: none;
+  font-size: 1.3em;
+  opacity: 0.5s;
+  transition: 0.5s;
+}
+.footernav ul li a:hover{
+opacity: 1;
+}
+.footerBottom{
+  background-color: #000;
+  padding: 20px;
+  text-align: center;
+}
+.footerBottom p{
+  color: white;
+}
+.desinger{
+ opacity: 0.7;
+ text-transform: uppercase;
+ letter-spacing: 1px;
+ font-weight: 400;
+ margin: 0px 5px;
+}
+@media (max-width: 700px) {
+   .footernav{
+    flex-direction: column;
+   }
+   .footernav ul li{
+    width: 100%;
+    text-align: center;
+    margin: 10px;
+   }
+}
+
+
+.social-icons {
+  margin-top: 15px;
+  display: flex;
+  gap: 15px;
+}
+
+.social-icons i {
+  font-size: 22px;
+  color: #333;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.social-icons i:hover {
+  color: #007bff;
+}
+
+
+
+
+    .dropdown {
+      position: relative;
+      display: inline-block;
+      margin-right: 20px;
+    }
+.hover-link {
+  cursor: pointer;
+  color: white;
+    display: inline; /* اجعلها تظهر بشكل دائم */
+}
+
+.dropdown-box {
+  display: none;
+  position: absolute;
+  top: 25px;
+  left: 0;
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  z-index: 1000;
+  min-width: 180px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.dropdown-box ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.dropdown-box ul li {
+  padding: 5px 10px;
+  font-size: 14px;
+}
+
+.dropdown:hover .dropdown-box {
+  display: block;
+}
+
+
+
+.brand-carousel {
+  overflow: hidden;
+  width: 100%;
+  margin: 20px 0;
+}
+
+.brand-track {
+  display: flex;
+  width: fit-content;
+  transition: transform 1s ease-in-out;
+}
+
+.brand-item {
+  flex: 0 0 auto;
+  padding: 10px;
+  margin-right: 75px; /* فرق 2 سنتي بين كل لوجو والتاني */
+  text-align: center;
+}
+
+
+.product-menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 0;
+  overflow-x: auto;
+  gap: 30px;
+}
+
+.product-menu a {
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  transition: transform 0.2s;
+}
+
+.product-menu a:hover {
+  transform: scale(1.05);
+}
+
+.product-menu img {
+  width: 60px;
+  height: 60px;
+  border-radius: 10px;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto 5px;
+  
+}
+
+
+
+
+
+.product-menu-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.product-menu {
+  display: flex;
+  justify-content: flex-start; /* علشان يبدأ من أول اليسار */
+  align-items: center;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  gap: 20px;
+  padding: 10px;
+  scrollbar-width: none;
+}
+
+.product-menu::-webkit-scrollbar { display: none; }
+
+.product-menu a {
+  display: inline-block;
+  margin: 30px;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+  min-width: 120px;           /* عرض كرت ثابت لسهولة الحساب */
+}
+
+.product-menu img {
+  width: 80px;
+  height: auto;
+}
+
+.scroll-btn {                 /* اختياري لتثبيت مقاس الزر */
+  width: 40px;
+  height: 40px;
+}
+
+.scroll-btn {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 24px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  border-radius: 50%;
+}
+
+.scroll-btn.left {
+  left: 0;
+}
+
+.scroll-btn.right {
+  right: 0;
+}
+
+.scroll-btn:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.product-menu {
+  padding-left: 0; /* مهم لو في padding بيبعد أول عنصر */
+  scroll-padding-left: 0;
+}
+.product-menu a:first-child {
+  margin-left: 0; /* نشيل المسافة من أول عنصر */
+}
+
+
+
+
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;z-index:10000}
+.modal{background:#fff;width:95%;max-width:420px;border-radius:12px;padding:20px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.modal h3{margin:0 0 12px}
+.tabs{display:flex;gap:8px;margin-bottom:12px}
+.tabs button{flex:1;padding:8px;border:1px solid #ccc;background:#f7f7f7;cursor:pointer;border-radius:8px}
+.tabs button.active{background:#007BFF;color:#fff;border-color:#007BFF}
+.form-group{margin-bottom:10px}
+.form-group label{display:block;margin-bottom:6px;font-size:14px}
+.form-group input{width:100%;padding:10px;border:1px solid #ccc;border-radius:8px}
+.modal .note{background:#fff3cd;padding:10px;border-left:4px solid #ff9800;margin-bottom:12px;font-size:14px}
+.modal .actions{display:flex;gap:8px;margin-top:10px}
+.modal .actions button{flex:1;padding:10px;border:none;border-radius:8px;cursor:pointer}
+.modal .actions .primary{background:#007BFF;color:#fff}
+.modal .actions .ghost{background:#eee}
+.hidden{display:none !important}
+
+
+/* كود السلايدر الأفقي الجديد */
+.latest-products {
+  display: flex;
+  overflow-x: auto; 
+  gap: 20px;
+  padding: 20px 0;
+  scroll-behavior: smooth;
+}
+.latest-products::-webkit-scrollbar {
+  height: 8px;
+}
+.latest-products::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+.box {
+  flex: 0 0 auto;
+  width: 200px;
+}
+.box img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  display: block;
+}
+
+
+.two-boxes {
+  display: flex;         
+  gap: 20px;              /* مسافة أكبر بين الصورتين */
+  width: 100%; 
+}
+
+.two-boxes a {
+  flex: 1;                /* كل صورة تاخد نفس المساحة */
+}
+
+.two-boxes img {                     
+  width: 100%;            /* الصورة تملى العرض المتاح */
+  height: 300px;          /* 👈 هنا تزود الطول */
+  object-fit: cover;      /* يخلي الصورة تتقص مظبوط وتبان مليانة */
+  border-radius: 12px;    /* زوايا ناعمة (اختياري) */
+  display: block;
+}
+
+
+
+@media (max-width: 768px) {
+  .two-boxes {
+    grid-template-columns: 1fr; /* عمود واحد في الشاشات الصغيرة */
+  }
+}
+
+
+
+
+
+
+
+.product h3 {
+  font-size: 16px;
+  margin: 10px 0 5px;
+}
+
+.price {
+  font-weight: bold;
+  color: #e60000;
+  margin-bottom: 10px;
+}
+
+.add-to-cart {
+  background: #0077ff;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.add-to-cart:hover {
+  background: #005bcc;
+}
+
+
+        body {font-family: Arial, sans-serif; background:#f5f5f5; margin:20px;}
+        form {margin-bottom:20px;}
+        input[type=text]{padding:10px; width:300px; border-radius:8px; border:1px solid #ccc;}
+        button{padding:10px 20px; border:none; border-radius:8px; background:#007BFF; color:#fff; cursor:pointer;}
+        button:hover{background:#0056b3;}
+        .products {display: grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap:20px;}
+        .card {background:#fff; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.1); padding:15px; text-align:center;}
+        .card img {max-width:100%; height:180px; object-fit:cover; border-radius:10px;}
+        .card h3 {margin:10px 0; font-size:18px;}
+        .price {color:green; font-weight:bold; margin:5px 0;}
+        .card button {margin-top:10px; width:100%; padding:10px;}
+        .buy {background:#28a745;}
+        .buy:hover{background:#218838;}
+        .cart {background:#ffc107;}
+        .cart:hover{background:#e0a800;}
+
+
+        .modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.5);
+  display: none; justify-content: center; align-items: center;
+  z-index: 1000;
+}
+.modal {
+  background: #fff; padding: 20px;
+  border-radius: 12px; max-width: 400px; width: 90%;
+}
+.modal button {cursor:pointer}
+
+.fly-image {
+  position: fixed;
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+  object-fit: contain;
+  z-index: 10000;
+  pointer-events: none;
+  transition: transform 1s ease-in-out, opacity 1s ease-in-out;
+}
+
+
+
+.add-to-cart.added {
+  background: #28a745 !important;
+  position: relative;
+}
+.add-to-cart.added::after {
+  content: "✔ تم الإضافة";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-weight: bold;
+}
+
+
+
+
+
+/* لون الأيقونة والنص يتغير مع بعض */
+.returns-box {
+  text-align: center;
+  cursor: pointer;
+  color: black;
+  transition: color 0.3s;
+}
+
+.returns-box img {
+  transition: filter 0.3s;
+}
+
+.returns-box:hover,
+.returns-box:hover p {
+  color: #007BFF; /* النص يبقى أزرق */
+}
+
+.returns-box:hover img {
+  filter: hue-rotate(190deg) saturate(150%); /* الأيقونة كمان تبقى مزرقة */
+}
+
+
+.latest-products {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;        
+  scroll-behavior: smooth;
+  scrollbar-width: none; /* يخفي في فايرفوكس */
+}
+.latest-products::-webkit-scrollbar {
+  display: none; /* يخفي في كروم/سفاري */
+}
+
+.product {
+  width: 250px;           /* عرض الكرت ثابت */
+  flex-shrink: 0;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  text-align: center;
+  padding: 15px;
+}
+
+.product img {
+  width: 100%;            
+  height: 180px;           /* 👈 ارتفاع ثابت */
+  object-fit: contain;     /* 👈 يخلي الصورة كاملة من غير ما تتقص */
+  border-radius: 8px;
+}
+
+
+
+.icons {
+  display: flex;
+  align-items: center;
+  gap: 38px; /* حوالي 1 سم */
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+}
+
+
+.latest-products-container {
+  position: relative;
+}
+
+.scroll-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #00bfff; /* سماوي */
+  color: white;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.8;
+  transition: background 0.3s, opacity 0.3s;
+  z-index: 10;
+}
+
+.scroll-btn:hover {
+  background: #007bff; /* أزرق غامق */
+  opacity: 1;
+}
+
+.scroll-btn.left {
+  left: -20px; /* جنب الشمال */
+}
+
+.scroll-btn.right {
+  right: -20px; /* جنب اليمين */
+}
+
+  </style>
+
+
+  <script>
+    let likes = 0;
+    function toggleLike() {
+      likes++;
+      document.getElementById('like-count').textContent = likes;
+    }
+
+    const sliderImages1 = [
+  { src: "https://via.placeholder.com/200x150?text=Slider+1", text: "Slider Product 1" },
+  { src: "https://via.placeholder.com/200x150?text=Slider+3", text: "Slider Product 3" }
+];
+const sliderImages2 = [
+  { src: "https://via.placeholder.com/200x150?text=Slider+2", text: "Slider Product 2" },
+  { src: "https://via.placeholder.com/200x150?text=Slider+4", text: "Slider Product 4" }
+];
+let sliderIndex = 0;
+
+setInterval(() => {
+  sliderIndex = (sliderIndex + 1) % sliderImages1.length;
+  document.getElementById('slider-img-1').src = sliderImages1[sliderIndex].src;
+  document.getElementById('slider-text-1').textContent = sliderImages1[sliderIndex].text;
+  document.getElementById('slider-img-2').src = sliderImages2[sliderIndex].src;
+  document.getElementById('slider-text-2').textContent = sliderImages2[sliderIndex].text;
+}, 5000);
+
+let currentSlide = 0;
+setInterval(() => {
+  const track = document.querySelector('.carousel-track');
+  const totalSlides = track.children.length;
+  currentSlide = (currentSlide + 1) % totalSlides;
+  track.style.transform = `translateX(-${currentSlide * 100}%)`;
+}, 3000);
+
+
+  function showShippingInfo() {
+    document.getElementById('shipping-info-box').style.display = 'block';
+  }
+
+  function closeShippingInfo() {
+    document.getElementById('shipping-info-box').style.display = 'none';
+  }
+
+
+let brandIndex = 0;
+setInterval(() => {
+  const brandTrack = document.querySelector('.brand-track');
+  const items = document.querySelectorAll('.brand-item');
+  
+  // اجمع عرض العناصر من الأول لحد العنصر الحالي
+  let offset = 0;
+  for (let i = 0; i < brandIndex; i++) {
+    offset += items[i].offsetWidth + 20; // 20 هي المسافة بين العناصر
+  }
+
+  brandTrack.style.transform = `translateX(-${offset}px)`;
+  brandIndex = (brandIndex + 1) % items.length;
+}, 1000);
+
+document.addEventListener("DOMContentLoaded", function () {
+    const menu = document.querySelector(".product-menu");
+
+    if (menu) {
+        menu.addEventListener("wheel", function (e) {
+            e.preventDefault();
+            menu.scrollLeft += e.deltaY > 0 ? 100 : -100; // تحريك أسرع أو أبطأ حسب الرقم
+        });
+    } else {
+        console.error("⚠ لم يتم العثور على عنصر .product-menu");
+    }
+});
+document.addEventListener("DOMContentLoaded", function() {
+  const productImages = [
+    "aura-removing.jpg.png",
+    "AURA_GP750_Exh2.jpg",
+    "AURA_GP750_Exh3.jpg",
+    "AURA_GP750_Exh4.jpg",
+    "AURA_GP750_Exh5.jpg"
+  ];
+
+  let currentImageIndex = 0;
+  const productSlider = document.getElementById("product-slider");
+
+  setInterval(() => {
+    currentImageIndex = (currentImageIndex + 1) % productImages.length;
+    productSlider.src = productImages[currentImageIndex];
+  }, 5000);
+});
+
+function searchProduct() {
+  const query = document.getElementById("searchInput").value.toLowerCase().trim();
+
+  // مصفوفة فيها المنتجات + اللينك بتاعها
+  const products = [
+    { name: "galax revolution 05 - gaming case - galax - ", url: "galax.html" },
+    { name: "corsair ram - corsair - corsair vengence ", url: "cors.html" },
+    { name: "kingstone fury beast - ram 8 gb - fury beast - ", url: "king.html" },
+    { name: "patriot 8gb 3200mhz ddr4 viper steel - patroiet ram 8 gb - patriot viper -  ", url: "patroit.html" },
+    { name: "Corsair Vengeance RGB 32GB (2x16GB) DDR5 - ram kit 32gb (2*16) - corsair - corsair ram 32gb", url: "corsair.32gb.html" },
+    { name: "TwinMOS DDR4 8GB 3200MHz CL16 RGB - ram twinmos - twinmos 8gb", url: "twinmos 8gb 3200.html" },
+    { name: "TwinMOS DDR4 16GB 3200MHz CL16 RGB - ram twinmos 16gb - twinmos 16gb - twinmos ram 16gb", url: "twinmos 16GB 3200.html" },
+    { name: "Kingston FURY Beast RGB 16GB DDR4 3200MT/s CL16 - ram kingston 16gb - ram 16gb", url: "Kingston FURY Beast RGB 16GB DDR4.html" },
+    { name: "TwinMOS DDR4 8GB 3200MHz CL16 RGB - ram twinmos - twinmos 8gb", url: "twinmos 8gb 3200.html" },
+    // 👆 ضيف باقي المنتجات هنا
+  ];
+
+  const result = products.find(p => p.name.includes(query));
+
+  if (result) {
+    window.location.href = result.url;
+  } else {
+    alert("❌ المنتج غير موجود");
+  }
+}
+
+// ✅ تشغيل البحث عند الضغط على Enter
+document.getElementById("searchInput").addEventListener("keypress", function(e) {
+  if (e.key === "Enter") {
+    e.preventDefault(); // يمنع الفورم الافتراضي
+    searchProduct();    // يشغل البحث
+  }
+});
+
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  const cartIcon = document.querySelector(".icons .icon img"); // صورة العربة
+  const cartCount = document.getElementById("cartCount");
+  let count = 0;
+
+  document.querySelectorAll(".add-to-cart").forEach(button => {
+    button.addEventListener("click", function(e) {
+      const product = e.target.closest(".product");
+      const img = product.querySelector("img");
+
+      // نسخة من صورة المنتج
+      const flyingImg = img.cloneNode(true);
+      flyingImg.classList.add("fly-image");
+      document.body.appendChild(flyingImg);
+
+      // مكان بداية الصورة (المنتج)
+      const imgRect = img.getBoundingClientRect();
+      flyingImg.style.left = imgRect.left + "px";
+      flyingImg.style.top = imgRect.top + "px";
+
+      // مكان العربة
+      const cartRect = cartIcon.getBoundingClientRect();
+
+      // force reflow
+      getComputedStyle(flyingImg).transform;
+
+      // انتقال
+      flyingImg.style.transform = `translate(${cartRect.left - imgRect.left}px, ${cartRect.top - imgRect.top}px) scale(0.2)`;
+      flyingImg.style.opacity = "0.5";
+
+      // بعد الأنيميشن
+      flyingImg.addEventListener("transitionend", () => {
+        flyingImg.remove();
+        count++;
+        cartCount.textContent = count;
+      });
+    });
+  });
+});
+
+
+
+
+const API_URL = "https://script.google.com/macros/s/AKfycbznOqUigXUr15whA9CnqaUUeeOaE3ttQ4XbXPdTHQdUOYy_bHuXQ0YDC8s5yROZFv0I/exec";
+
+// فتح وقفل المودالات
+function openModal(id){
+  document.getElementById(id).style.display="flex";
+}
+function closeModal(id){
+  document.getElementById(id).style.display="none";
+}
+
+// Signup
+document.getElementById("signupForm").addEventListener("submit", function(e){
+  e.preventDefault();
+  const username = document.getElementById("signupName").value.trim();
+  const phone    = document.getElementById("signupPhone").value.trim();
+  const email    = document.getElementById("signupEmail").value.trim();
+  const password = document.getElementById("signupPassword").value.trim();
+
+  fetch(API_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      action: "signup",
+      username, phone, email, password
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if(data.success){
+      alert("✅ Account created successfully!");
+      closeModal('signupModal');
+    } else {
+      alert("❌ Failed to create account!");
+    }
+  })
+  .catch(err => {
+    console.error(err);
+    alert("⚠ Server connection error");
+  });
+});
+
+// Login
+document.getElementById("loginForm").addEventListener("submit", function(e){
+  e.preventDefault();
+  const email = document.getElementById("loginEmail").value.trim();
+  const password  = document.getElementById("loginPassword").value.trim();
+
+  fetch(API_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      action: "login",
+      email, password
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if(data.success){
+      alert("✅ Login successful, welcome " + data.username);
+      closeModal('loginModal');
+    } else {
+      alert("❌ Invalid email or password");
+    }
+  })
+  .catch(err => {
+    console.error(err);
+    alert("⚠ Server connection error");
+  });
+});
+
+function openReturnsBox() {
+  document.getElementById('returns-info-box').style.display = 'block';
+}
+function closeReturnsBox() {
+  document.getElementById('returns-info-box').style.display = 'none';
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    const latest = document.querySelector(".latest-products");
+
+    if (latest) {
+        latest.addEventListener("wheel", function (e) {
+            e.preventDefault();
+            latest.scrollLeft += e.deltaY > 100 ? 1000 : -1000;
+        });
+    }
+});
+
+
+function scrollLatest(direction) {
+  const latest = document.querySelector(".latest-products");
+  const scrollAmount = 300; // مسافة التمرير بالبكسل
+  latest.scrollLeft += direction * scrollAmount;
+}
+
+  </script>
+</head>
+<body>
+
+<!-- فورم البحث -->
+
+<header>
+  <div class="logo">
+    <img src="logo panstore.jpg.jpg" alt="Logo">
+  </div>
+
+<div class="search-bar">
+  <input type="text" id="searchInput" placeholder="search...">
+  <button onclick="searchProduct()">search</button>
+</div>
+
+
+<div class="icons">
+         <a href="cart.html" class="icon" title="السلة">
+             <img src="pngtree-shopping-cart-convenient-icon-image_1287807.jpg" width="24">
+             <span id="cartCount"></span>
+         </a>
+</div>
+    <div class="icon"><img src="free-user-icon-3296-thumb.png" alt="user" width="24"></div>
+    <div class="icon" onclick="toggleLike()">
+      <img src="free-heart-icon-3510-thumb.png" alt="heart" width="24">
+      <span class="count" id="like-count">0</span>
+    </div>
+  </div>
+</header>
+
+<!-- ===== Login Modal ===== -->
+<div id="loginModal" class="modal-overlay">
+  <div class="login-box">
+    <button onclick="closeModal('loginModal')" class="close-btn">&times;</button>
+    <h2>Welcome back</h2>
+    <p class="subtitle">Welcome back! Please enter your details.</p>
+
+    <form id="loginForm">
+      <div class="input-group">
+        <label>Email</label>
+        <input type="email" id="loginEmail" placeholder="Enter your email" required>
+      </div>
+
+      <div class="input-group">
+        <label>Password</label>
+        <input type="password" id="loginPassword" placeholder="Password" required>
+      </div>
+
+      <div class="forgot">
+        <a href="#">Forgot password?</a>
+      </div>
+
+      <button type="submit" class="btn btn-login">Login</button>
+    </form>
+
+    <button class="btn btn-google">
+      <img src="https://www.svgrepo.com/show/355037/google.svg" alt="Google" />
+      Sign in with Google
+    </button>
+
+    <p class="signup-text">
+      Don’t have an account?
+      <a href="#" onclick="closeModal('loginModal'); openModal('signupModal');">Sign up for free</a>
+    </p>
+  </div>
+</div>
+
+<!-- ===== Signup Modal ===== -->
+<div id="signupModal" class="modal-overlay">
+  <div class="login-box">
+    <button onclick="closeModal('signupModal')" class="close-btn">&times;</button>
+    <h2>Create Account</h2>
+    <p class="subtitle">Please fill in the details to create your account</p>
+
+    <form id="signupForm">
+      <div class="input-group">
+        <label>User Name</label>
+        <input type="text" id="signupName" placeholder="Enter your name" required>
+      </div>
+
+      <div class="input-group">
+        <label>Phone</label>
+        <input type="tel" id="signupPhone" placeholder="Enter your phone number" required>
+      </div>
+
+      <div class="input-group">
+        <label>Email</label>
+        <input type="email" id="signupEmail" placeholder="Enter your email" required>
+      </div>
+
+      <div class="input-group">
+        <label>Password</label>
+        <input type="password" id="signupPassword" placeholder="Create a password" required>
+      </div>
+
+      <button type="submit" class="btn btn-login">Create Account</button>
+    </form>
+
+    <p class="signup-text">
+      Already have an account?
+      <a href="#" onclick="closeModal('signupModal'); openModal('loginModal');">Login</a>
+    </p>
+  </div>
+</div>
+
+
+<!-- ===== Cart Modal ===== -->
+<div id="cartModal" class="modal-overlay">
+  <div class="modal">
+    <button onclick="closeModal('cartModal')">&times;</button>
+    <h2>🛒 عربة التسوق</h2>
+    <p>السلة حالياً فارغة</p>
+  </div>
+</div>
+
+
+
+
+<main>
+
+</main>
+
+<div class="product-menu-container">
+
+
+  <div class="product-menu">
+    <a href="RAM2.html" target="_blank"> 
+      <img src="L35yq9xdSBaPWQ_9lDB4EyUFWd7niL05y0xJf2djT7LTjRpSc4S7fyFYV7TtmZieWpjQPoyaeDLNDsE_l--t-w-removebg-preview.png" alt="RAM" style="width: 150px;">
+      <p>RAM & Memory</p>
+    </a>
+    <a href="case.html" target="_blank">
+      <img src="GameMaxVengeance-removebg-preview.png" alt="Case" style="width: 130px;">
+      <p>Gaming Cases</p>
+    </a>
+    <a href="keyboard.html" target="_blank">
+      <img src="1__2_-removebg-preview.png" alt="Keyboard" style="width: 130px;">
+      <p>Gaming Keyboards</p>
+    </a>
+    <a href="gpu.html" target="_blank">
+      <img src="gigabyte-nvidia-geforce-rtx-4060-gaming-oc-ai-8gb-gddr6-2550mhz-rgb-gpu-up-to-8k-graphics-card-black-front-viee.png" alt="GPU" style="width: 150px;">
+      <p> Graphics Cards</p>
+    </a>
+    <a href="mouse2.html" target="_blank">
+      <img src="31TIqz38BTL._SR290_290_-removebg-preview.png" alt="MOUSE" style="width: 130px;">
+      <p>Gaming Mouse</p>
+    </a>
+    <a href="cpu.html" target="_blank">
+      <img src="PROSESSORE-ICON.JPG" alt="PROSSEOR" style="width: 120px;">
+      <p>Processors (CPU)</p>
+    </a>
+    <a href="motherboard.html" target="_blank">
+      <img src="Motherboard-icon.jpg" alt="Motherboard" style="width: 130px;">
+      <p>Motherboards</p>
+    </a>
+    <a href="wi-fi camera.html" target="_blank">
+      <img src="1__3_-removebg-preview.png" alt="wifi-camera" style="width: 150px;">
+      <p>Wi-Fi Cameras</p>
+    </a>
+    <a href="headset.html" target="_blank">
+      <img src="H510ZEUS-XRGBWhiteWiredGamingHeadset_1_450x450-550x550.png" alt="headphones" style="width: 150px;">
+      <p>Pro Gaming Headsets</p>
+    </a>
+    <a href="powersupply.html" target="_blank">
+      <img src="power supply-icon.jpg" alt="power supply" style="width: 150px;">
+      <p>Power Supply (PSU)</p>
+    </a>
+    <a href="survilance camera.html" target="_blank">
+      <img src="3MP-ATC-Dome-Camera-01.webp" alt="survilance camera" style="width: 150px;">
+      <p>Surveillance Cameras</p>
+    </a>
+    <a href="harddesk.html" target="_blank">
+      <img src="HDD_vs_SSD_-_AdobeStock_323405056_2-removebg-preview.png" alt="HARD DISK" style="width: 150px;">
+      <p>Storage SSD & HDD</p>
+    </a> 
+    <a href="mousepad.html" target="_blank">
+      <img src="1__4_-removebg-preview.png" alt="MOUSEPAD" style="width: 150px;">
+      <p>Gaming Mousepads</p>
+    </a> 
+    <a href="network.html" target="_blank">
+      <img src="840n-removebg-preview.png" alt="NETWORKS" style="width: 150px;">
+      <p>Networking Devices</p>
+    </a>
+     <a href="fingerprint.html" target="_blank">
+      <img src="GAOTek-BMFS-1071-removebg-preview.png" alt="NETWORKS" style="width: 150px;">
+      <p>Fingerprint Devices</p>
+    </a>
+     <a href="accessories.html" target="_blank">
+      <img src="71Z9T0VgGyL._AC_US218_-removebg-preview.png" alt="accessories" style="width: 150px;">
+      <p>PC Accessories</p>
+    </a>
+  </div>
+
+ 
+</div>
+
+
+
+<main>
+  <div>
+    <img src="WhatsApp Image 2025-08-04 at 3.50.52 PM.jpeg" alt="" style="width: 100%; height: 100%; object-fit: cover;">
+  </div>
+  
+</main>
+<div style="display: flex; justify-content: space-around; align-items: center; gap: 20px; padding: 20px; background: #f8f8f8; border-radius: 10px;">
+  <div onclick="showShippingInfo()" style="cursor: pointer; text-align: center;">
+    <img src="fast-delivery-black-box-truck-icon-image-png-735811696681461flj7wu0mw4.png" alt="shipping" style="width: 40px; height: auto;">
+    <p>information shipping</p>
+  </div>
+
+<!-- الجزء بتاع الأيقونة والنص -->
+<div class="returns-box" onclick="openReturnsBox()">
+  <img src="imgbin-product-return-policy-money-back-guarantee-computer-icons-return-mh7kKQJzeimLBeLR6KpS2Atdc.jpg" 
+       alt="returns" 
+       style="width: 40px; height: auto;">
+  <p>15 days returns</p>
+</div>
+
+<!-- المربع اللي هيظهر -->
+<div id="returns-info-box" style="
+  display: none;
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -20%);
+  background: linear-gradient(to bottom, #e0f7fa, #ffffff);
+  border: 2px solid #007BFF;
+  border-radius: 12px;
+  padding: 25px;
+  width: 750px;
+  max-width: 90%;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  z-index: 9999;
+  direction: rtl;
+  text-align: right;
+">
+  <h3 style="margin-top: 0; color: #007BFF;">📦 سياسة الإرجاع والضمان</h3>
+  <ul style="list-style: disc; padding-right: 20px; color:#000;">
+    <li>يمكنك إرجاع أو استبدال المنتج خلال 15 يومًا إذا لم يتم فتحه أو وجود أي خدوش.</li>
+    <li>الضمان 11 شهر من تاريخ الشراء ضد عيوب الصناعة (لا يشمل عيوب الاستخدام)، ويجب تسليم الجزء المعيب قبل انتهاء الضمان بـ 15 يومًا.</li>
+    <li>في حالة فتح الجهاز أو خدش/قطع ملصق الضمان أو كسر/حرق/قطع في التراك، يعتبر خارج الضمان.</li>
+    <li>الشركة غير مسؤولة عن سوء الاستعمال أو سوء التركيب أو الفولت الكهربائي الزائد.</li>
+    <li>نحن نحرص دائمًا على تقديم أفضل خدمة، لذلك نرجو الاحتفاظ بالفاتورة والعلبة الأصلية لضمان سرعة الخدمة.</li>
+    <li>خدمة العملاء دائمًا في خدمتك لتقديم الدعم والإجابة عن استفساراتك في أسرع وقت.</li>
+  </ul>
+  <button onclick="closeReturnsBox()" style="
+    margin-top: 20px;
+    padding: 8px 16px;
+    border: none;
+    background: #007BFF;
+    color: white;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+  ">إغلاق</button>
+</div>
+
+
+  <div style="text-align: center;">
+    <img src="images.png" alt="payment" style="width: 60px; height: auto;">
+    <p>payments terms</p>
+  </div>
+
+  <div style="text-align: center;">
+    <img src="gift-icon.png" alt="gift" style="width: 40px; height: auto;">
+    <p>special gifts to you</p>
+  </div>
+</div>
+
+  </footer>
+  <main>
+
+  <h2 style="padding-left: 10px; margin-top: 20px; background-color: #007BFF;">Most Popular</h2>
+
+  <!-- المستطيل الأول -->
+  <div style="display: flex; gap: 20px; padding: 20px; background-color: #007BFF;">
+    <div style="flex: 1; background: #f8f8f8; border-radius: 10px; padding: 10px;">
+       <a href="h510.html">
+      <img src="headphone h510 zeus.jpg" style="width: 100%; border-radius: 8px;" alt="headphone h510 zeus">
+      </a>
+      <p style="text-align: center;">headphone h510 zeus</p>
+    </div>
+    <div style="flex: 1; background: #f8f8f8; border-radius: 10px; padding: 10px;">
+        <a href="game.html">
+        <img src="aura-removing.jpg.png" style="width: 100%;   border-radius: 8px;" alt="GAMDIAS AURA GP750 Power Supply – 750W – 80+">
+        </a>
+      <p style="text-align: center;">GAMDIAS AURA GP750 750W 80+</p>
+    </div>
+    <div style="flex: 1; background: #f8f8f8; border-radius: 10px; padding: 10px;">
+      <a href="k14.html">
+      <img src="k14.png" style="width: 100%; border-radius: 8px;" alt="Product 3">
+      </a>
+      <p style="text-align: center;">Fingerprint ZKTECO K14 PRO</p>
+    </div>
+    <div style="flex: 1; background: #f8f8f8; border-radius: 10px; padding: 10px;">
+      <a href="shark.html">
+      <img src="headphone shark h500.png" style="width: 100%; border-radius: 8px;" alt="headphone shark h500">
+      </a>
+      <p style="text-align: center; ">headphone shark h500</p>
+    </div>
+  </div>
+
+  <!-- فاصل 2 سنتي -->
+  <div style="height: 20px; background-color: #007BFF;"></div>
+
+  <!-- المستطيل الثاني -->
+  <div style="display: flex; gap: 20px; padding: 20px; background-color: #007BFF;">
+    <div style="flex: 1; background: #f8f8f8; border-radius: 10px; padding: 10px;">
+      <a href="hero.html">
+      <img src="Hero-II-AirEN43918－產品圖-05-1.png" style="width: 100%; border-radius: 8px;" alt="Product 5">
+      </a>
+      <p style="text-align: center;">Case Xigmatic Hero ii+600w</p>
+    </div>
+    <div style="flex: 1; background: #f8f8f8; border-radius: 10px; padding: 10px;">
+      <a href="skyworth h30p.html">
+      <img src="camera skyworth h30p.jpg" style="width: 100%; border-radius: 8px;" alt="Product 6">
+      </a>
+      <p style="text-align: center;">Camera wifi Skyworth H30p</p>
+    </div>
+    <div style="flex: 1; background: #f8f8f8; border-radius: 10px; padding: 10px;">
+      <a href="king.html">
+      <img src="king2.jpg" style="width: 100%; border-radius: 8px;" alt="Product 7">
+      </a>
+      <p style="text-align: center;">Ram Kingston Fury Beast </p>
+    </div>
+    <div style="flex: 1; background: #f8f8f8; border-radius: 10px; padding: 10px;">
+      <a href="m711.html">
+      <img src="M711_450x450_f95d69a8-cb76-4d91-bf76-e7bdd36d5497.webp" style="width: 100%; border-radius: 8px;" alt="Product 8">
+      </a>
+      <p style="text-align: center;">Mouse Redragon M711 COUBRA</p>
+    </div>
+  </div>
+</main>
+
+
+<main>
+ <div class="special-section">
+    <h3>Special Price</h3>
+    <div class="carousel">
+      <div class="carousel-track">
+        <div class="offer-box">
+          <a href="msi3060.html">
+          <img src="600 (1).png" alt="msi rtx 3060 12gb ventus 2x" style="width: 48%;">
+          </a>
+          <p>Msi RTX 3060 12GB Ventus 2x</p>
+        </div>
+        <div class="offer-box">
+          <a href="PNY RTX5060 8GB.html">
+          <img src="pny-nvidia-geforce-rtx-5060-8gb-overclocked-dual-fan-graphics-card-dlss-4-pcie-5-0-10-removebg-preview.png" alt="PNY RTX 5060 8GB DUAL FAN" style="width: 400px; height: 450px;">
+          </a>
+          <p>PNY GeForce RTX 5060 8GB DUAL FAN</p>
+        </div>
+        <div class="offer-box">
+          <img src="ryzen 5 7600.jpg" alt="AMD Ryzen 5 7600" style="width: 350px; height: 400px;">
+          <p>AMD RYZEN 5 7600</p>
+        </div>
+        <div class="offer-box">
+          <img src="n4UMLPR03j8lyzOYYjGXkFwrb3-1100x1100-removebg-preview.png" alt="WD_BLACK SN7100 NVMe SSD 1TB — M.2 2280" style="width: 450px; height: 400px;">
+          <p>WD_BLACK SN7100 NVMe SSD 1TB — M.2 2280</p>
+        </div>
+        <div class="offer-box">
+          <img src="y5WDwKqv5niR6eqHU1PCYZYXCk-1100x1100-removebg-preview.png" alt="GAMDIAS AURA GL360 DIGITAL 360mm ARGB Liquid CPU Cooler" style="width: 450px; height: 400px;">
+          <p>GAMDIAS AURA GL360 DIGITAL 360mm ARGB Liquid CPU Cooler</p>
+        </div>
+        <div class="offer-box">
+          <a href="power ASUS TUF Gaming 1000W.html">
+          <img src="Z6wrCZOZemeVuwyEfVcKBTxL4z-1100x1100-removebg-preview.png" alt="ASUS TUF Gaming 1000W ATX Power Supply Unit, 80 Plus Gold" style="width: 450px; height: 400px;">
+          </a>
+          <p>ASUS TUF Gaming 1000W ATX Power Supply Unit, 80 Plus Gold</p>
+        </div>
+        <div class="offer-box">
+          <a href="twinmos 16GB 3200.html">
+          <img src="RyHLSFF2286F17GHJrxlJhWGXa-1100x1100-removebg-preview.png" alt="TwinMOS DDR4 16GB 3200MHz CL16 RGB" style="width: 450px; height: 400px;">
+          </a>
+          <p>TwinMOS DDR4 16GB 3200MHz CL16 RGB</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<main>
+  <div>
+    <a href="Redragon K552 WGL-R.html">
+    <img src="paner redragon.jpeg" alt="" style="width: 100%; height: 100%; object-fit: cover;">
+    </a>
+  </div>
+  
+</main>
+
+
+<main>
+  <div class="section-title">Trending this week</div>
+
+  <div class="two-boxes">
+    <a href="GPU.html">
+      <img src="asus.png" alt="Keyboard AULA">
+    </a>
+    <a href="ASUS Prime H610M-D D4.html">
+      <img src="WhatsApp Image 2025-08-16 at 3.50.27 PM.jpeg" alt="ASUS PRIME">
+    </a>
+  </div>
+</main>
+
+
+
+
+
+<main>
+  <div class="latest-products-container">
+  <button class="scroll-btn left" onclick="scrollLatest(-1)">&#10094;</button>
+
+  <div class="section-title">Latest Products</div>
+  <div class="latest-products">
+    <!-- منتج -->
+    <div class="product">
+      <a href="k552 r.html">
+        <img src="Redragon-K552WLR-KUMARA-Mechanic_2.webp" alt="Redragon K552 WLR KUMARA">
+      </a>
+      <h3>Redragon K552 WLR</h3>
+      <p class="price">1500 EGP</p>
+      <button class="add-to-cart">أضف إلى العربة</button>
+    </div>
+
+    <!-- منتج -->
+    <div class="product">
+      <a href="Redragon K552 WGL-R.html">
+        <img src="REDRAGON WGL-R.jpg" alt="Redragon k552 WGL-R RED SWITCH">
+      </a>
+      <h3>Redragon WGL-R</h3>
+      <p class="price">1350 EGP</p>
+      <button class="add-to-cart" >أضف إلى العربة</button>
+    </div>
+
+    <!-- منتج -->
+    <div class="product">
+      <a href="h510.html">
+        <img src="headphone h510 zeus.jpg" alt="Headphone redragon h510 zeus">
+      </a>
+      <h3>Redragon H510 Zeus</h3>
+      <p class="price">2200 EGP</p>
+      <button class="add-to-cart">أضف إلى العربة</button>
+    </div>
+
+
+    <!-- منتج -->
+    <div class="product">
+      <a href="shark.html">
+        <img src="headphone shark h500.png" alt="headphone shark h500">
+      </a>
+      <h3>headphone shark h500</h3>
+      <p class="price">750 EGP</p>
+      <button class="add-to-cart">أضف إلى العربة</button>
+    </div>
+
+    <!-- منتج -->
+    <div class="product">
+      <a href="850r.html">
+        <img src="850r.png" alt="TP-Link TL-WA850RE">
+      </a>
+      <h3>TP-Link TL-WA850RE</h3>
+      <p class="price">700 EGP</p>
+      <button class="add-to-cart">أضف إلى العربة</button>
+    </div>
+
+
+    <!-- منتج -->
+    <div class="product">
+      <a href="cors.html">
+        <img src="cor.png.jpeg" alt="CORSAIR RAM">
+      </a>
+      <h3>CORSAIR RAM</h3>
+      <p class="price">2700 EGP</p>
+      <button class="add-to-cart">أضف إلى العربة</button>
+    </div>
+
+    <!-- منتج -->
+    <div class="product">
+      <a href="ASUS Prime H610M-D D4.html">
+        <img src="M.B asus prime H610M-D D4.jpg" alt="M.B asus prime H610M-D D4">
+      </a>
+      <h3> asus prime H610M-D </h3>
+      <p class="price">2700 EGP</p>
+      <button class="add-to-cart">أضف إلى العربة</button>
+    </div> 
+    
+    <!-- منتج -->
+    <div class="product">
+      <a href="PNY RTX5060 8GB.html">
+        <img src="cover_cache_optimize-70.webp" alt="PNY RTX5060 8GB">
+      </a>
+      <h3>PNY RTX5060 8GB</h3>
+      <p class="price">20700 EGP</p>
+      <button class="add-to-cart">أضف إلى العربة</button>
+    </div> 
+
+
+    <!-- منتج -->
+    <div class="product">
+      <a href="product-page3.html">
+        <img src="51dVAORuAUL._UF894,1000_QL80_.jpg" alt="HUB USB 4PORT">
+      </a>
+      <h3>HUB USB 4PORT</h3>
+      <p class="price">2700 EGP</p>
+      <button class="add-to-cart">أضف إلى العربة</button>
+    </div> 
+
+    <!-- منتج -->
+    <div class="product">
+      <a href="intel Core i9 14900K.html">
+        <img src="PROSESSORE-ICON.JPG" alt="intel i9-14700k">
+      </a>
+      <h3>Intel Core i9 14900KF 3.2GHz 24-Core</h3>
+      <p class="price">30.000 EGP</p>
+      <button class="add-to-cart">أضف إلى العربة</button>
+    </div>
+
+  </div>
+    <button class="scroll-btn right" onclick="scrollLatest(1)">&#10095;</button>
+</main>
+
+<main>
+  <div class="section-title">our brands</div>
+  <div class="brand-carousel">
+    <div class="brand-track">
+      <div class="brand-item"><img src="CORSAIRLogo2020_stack_K.avif" alt="corsair logo" style="width: 150px;"></div>
+      <div class="brand-item"><img src="web_logo-removebg-preview.png" alt="xigmatek logo" style="width: 150px;"></div>
+      <div class="brand-item"><img src="hikvision.png" alt="hikvision logo" style="width: 300px;"></div>
+      <div class="brand-item"><img src="1869513-removebg-preview.png" alt="skyworth logo" style="width: 150px;"></div>
+      <div class="brand-item"><img src="D-Link-Logo-removebg-preview.png" alt="D-Link" style="width: 200px;"></div>
+      <div class="brand-item"><img src="eufy_Security_Logo-removebg-preview.png" alt="eufy" style="width: 250px;"></div>
+      <div class="brand-item"><img src="IMOU_logo_600_600x.png" alt="imou" style="width: 200px;"></div>
+      <div class="brand-item"><img src="images__2_-removebg-preview.png" alt="TP-Link" style="width: 150px;"></div>
+      <div class="brand-item"><img src="asus.svg" alt="Ausus" style="width: 150px;"></div>
+      <div class="brand-item"><img src="MSI-Logo.png" alt="msi" style="width: 200px;"></div>
+      <div class="brand-item"><img src="449-4496434_gamdias-innovative-gaming-gamdias-logo-hd-png-download.png" alt="gamediaz" style="width: 150px;"></div>
+      <div class="brand-item"><img src="png-transparent-gigabyte-hd-logo-removebg-preview.png" alt="gigabyte" style="width: 150px;"></div>
+      <div class="brand-item"><img src="Redragon.webp" alt="redragon" style="width: 150px;"></div>
+      <div class="brand-item"><img src="T-DAGGER_LOGO-2-removebg-preview.png" alt="T-Degger" style="width: 200px;"></div>
+      <div class="brand-item"><img src="images__3_-removebg-preview.png" alt="havit" style="width: 150px;"></div>
+      <div class="brand-item"><img src="Kingston-Logo.png" alt="kingstone" style="width: 200px;"></div>
+      <div class="brand-item"><img src="Crucial-Logo-2007.png" alt="crucial" style="width: 200px;" ></div>
+      <div class="brand-item"><img src="amd-logo-png_seeklogo-7775.png" alt="amd" style="width: 150px;"></div>
+      <div class="brand-item"><img src="free-intel-282118.webp" alt="intel" style="width: 150px;"></div>
+      <div class="brand-item"><img src="images__4_-removebg-preview.png" alt="hp" style="width: 200px;"></div>
+      <div class="brand-item"><img src="western-digital-logo-png_seeklogo-152394-removebg-preview.png" alt="WD" style="width: 200px;"></div>
+      <div class="brand-item"><img src="hcVddCzJyN1FUfnQkpWYf87CuI1aQ2WfcB8K94GM.webp" alt="yes ido" style="width: 150px;"></div>
+      <div class="brand-item"><img src="34-large_brand.webp" alt="zktech" style="width: 200px;"></div>
+      <div class="brand-item"><img src="ezviz-logo-png_seeklogo-340396.png" alt="ezvize" style="width: 150px;"></div>
+      <div class="brand-item"><img src="Anker_Logo_Original-removebg-preview.png" alt="anker" style="width: 300px;"></div>
+      <div class="brand-item"><img src="galax-logo-png_seeklogo-307816.png" alt="galax" style="width: 150px;"></div>
+      <div class="brand-item"><img src="Dahua_Technology_logo-removebg-preview.png" alt="dahua" style="width: 200px;"></div>
+      <div class="brand-item"><img src="tapo-218239.png" alt="tapo" style="width: 150px;"></div>
+      <div class="brand-item"><img src="jsaux_logo-removebg-preview.png" alt="JEsux" style="width: 150px;"></div>
+      <div class="brand-item"><img src="viper-gaming-vertical-logo-png_seeklogo-401481.png" alt="patroiet"></div>
+      <div class="brand-item"><img src="onikuma_1528.webp" alt="onikoma"></div>
+      <div class="brand-item"><img src="360_197_1.avif" alt="samsung"></div>
+    </div>
+  </div>
+</main>
+
+
+
+
+<footer>
+  <div class="footer-container">
+
+    <!-- أيقونات السوشيال -->
+    <div class="socialicons">
+      <a href="https://www.facebook.com/share/1AwEw1fQRF/" target="_blank">
+        <i class="fa-brands fa-facebook"></i>
+      </a>
+      <a href="https://www.instagram.com/pan_store22?igsh=cm5wM2h3eDdwbTZ2" target="_blank">
+         <i class="fa-brands fa-instagram"></i></a>
+      </a>
+      <a href="https://www.tiktok.com/@pan.storee?_t=ZS-8yb4O6dAdPA&_r=1" target="_blank">
+          <i class="fa-brands fa-tiktok"></i></a>
+      </a>
+      <a href="" target="_blank">
+           <i class="fa-brands fa-whatsapp"></i></a>
+      </a>
+      <a href="#"><i class="fa-brands fa-youtube"></i></a>
+    </div>
+
+    <!-- روابط الصفحات -->
+    <div class="footernav">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="news.html">News</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="team.html">Our Team</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- حقوق الملكية -->
+  <div class="footerBottom">
+    <p>Copyright &copy;2025; Designed by <span class="desinger">Panstore</span></p>
+  </div>
+</footer>
+
+
+
+
+
+
+
+</body>
+</html>

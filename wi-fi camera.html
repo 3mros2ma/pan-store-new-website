@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+    <link rel="icon" href="logo panstore.jpg.jpg">
+<head>
+  <meta charset="UTF-8">
+  <title> Indoor & Outdoor Wi-Fi Cameras </title>
+  <style>
+body {
+  font-family: Arial, sans-serif;
+  margin: 0px;
+  padding: 0;
+}
+
+    header, nav, main, footer {
+      padding: 10px 20px;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f4f4f4;
+      border-bottom: 1px solid #ccc;
+    }
+    .logo {
+      margin-right: auto;
+      margin-left: 10px;
+    }
+    .logo img {
+      height: 60px;
+      width: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    nav {
+      background: #007BFF;
+      font-size: 14px;
+      border-radius: 8px;
+      color: white;
+    }
+    nav p span {
+      display: none;
+    }
+    nav p:hover span {
+      display: inline;
+    }
+    nav p {
+      background-color: #007BFF;
+      color: white;
+      margin: 0;
+      padding: 5px 10px;
+      border-radius: 8px;
+      display: inline-block;
+    }
+.search-bar {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border: 1px solid #ccc;   /* البوكس الخارجي */
+  border-radius: 25px;
+  padding: 10px 15px;
+  width: 800px;             /* الطول */
+  margin: 0 100px;
+}
+
+.search-bar input {
+  flex: 1;
+  border: none;             /* يشيل المربع الصغير */
+  outline: none;            /* يشيل التحديد الأزرق */
+  background: transparent;  /* يشيل أي خلفية */
+  font-size: 16px;
+  padding: 0;               /* يلغي أي فراغ داخلي */
+}
+
+.search-bar button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: #555;
+  padding: 0;
+}
+
+
+
+    .account-links {
+      margin: 0 20px;
+      white-space: nowrap;
+    }
+    .account-links a {
+      margin: 0 40px;
+      text-decoration: none;
+      color: #000;
+      font-size: 14px;
+    }
+    .icons {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    .icon {
+      font-size: 20px;
+      cursor: pointer;
+      position: relative;
+    }
+    .icon .count {
+      position: absolute;
+      top: -8px;
+      right: -10px;
+      background: red;
+      color: white;
+      font-size: 10px;
+      border-radius: 50%;
+      padding: 2px 5px;
+    }
+
+    /* قسم المنتجات */
+    .products {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 25px;
+      padding: 120px 20px 20px; /* padding-top كبير للهيدر */
+    }
+    .product-card {
+      background: #fff;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      cursor: pointer;
+      text-align: center;
+      padding: 20px;
+    }
+    .product-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+    }
+    .product-image {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    .product-image img {
+      width: 150px;
+      height: 150px;
+      object-fit: contain;
+      transition: transform 0.4s ease;
+    }
+    .product-card:hover .product-image img {
+      transform: scale(1.1);
+    }
+    .product-link {
+      text-decoration: none;
+      color: #333;
+    }
+    .product-link:hover {
+      color: #007bff;
+    }
+    .product-info h3 {
+      margin-bottom: 10px;
+      font-size: 18px;
+    }
+    .price {
+      color: #28a745;
+      font-size: 20px;
+      font-weight: bold;
+    }
+    .cart-btn, .buy-btn {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 8px 15px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: bold;
+      color: white;
+      transition: background 0.3s ease;
+    }
+    .cart-btn {
+      background: #ff9800;
+    }
+    .cart-btn:hover {
+      background: #e68900;
+    }
+    .buy-btn {
+      background: #007bff;
+    }
+    .buy-btn:hover {
+      background: #0056b3;
+    }
+
+    /* موبايل */
+    @media (max-width: 768px) {
+      .products {
+        grid-template-columns: repeat(1, 1fr);
+      }
+    }
+
+    .add-to-cart.added {
+  background: #28a745 !important;
+  position: relative;
+}
+
+
+/* مودالات */
+.modal-overlay {
+  display: none; /* مخفي افتراضيًا */
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+
+.icon {
+  position: relative;
+}
+
+#cartCount {
+  position: absolute;
+  top: -8px;   /* يخليها فوق الأيقونة */
+  right: -10px; /* يخليها ناحية اليمين */
+  background: red;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+  </style>
+    <script>
+function addToCart(name, price, img) {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  let existing = cart.find(p => p.name === name);
+
+  if (existing) {
+    existing.qty += 1;
+  } else {
+    cart.push({ name, price, img, qty: 1 });
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+  updateCartCount();
+}
+
+function updateCartCount() {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  document.getElementById("cartCount").innerText = cart.reduce((a, p) => a + p.qty, 0);
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+  const cartIcon = document.querySelector(".icons img"); 
+  const cartCount = document.getElementById("cartCount");
+  let count = 0;
+
+  document.querySelectorAll(".add-to-cart").forEach(button => {
+    button.addEventListener("click", function(e) {
+      const product = e.target.closest(".product-card");
+      const img = product.querySelector("img");
+
+      // نسخة من صورة المنتج
+      const flyingImg = img.cloneNode(true);
+      flyingImg.classList.add("fly-image");
+      document.body.appendChild(flyingImg);
+
+      // مكان بداية الصورة (المنتج)
+      const imgRect = img.getBoundingClientRect();
+      flyingImg.style.left = imgRect.left + "px";
+      flyingImg.style.top = imgRect.top + "px";
+
+      // مكان العربة
+      const cartRect = cartIcon.getBoundingClientRect();
+
+      // force reflow
+      getComputedStyle(flyingImg).transform;
+
+      // انتقال
+      flyingImg.style.transform = `translate(${cartRect.left - imgRect.left}px, ${cartRect.top - imgRect.top}px) scale(0.2)`;
+      flyingImg.style.opacity = "0.5";
+
+// بعد الأنيميشن
+flyingImg.addEventListener("transitionend", () => {
+  flyingImg.remove();
+
+  // ✅ زود المنتج في localStorage
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  cart.push({name: "RAM", price: 100, qty: 1}); // أو البيانات الفعلية للمنتج
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  // ✅ حدّث العداد
+  updateCartCount();
+});
+
+
+      // ✅ هنا الجزء الخاص بالزر
+      const originalText = e.target.textContent; 
+      e.target.textContent = "✔ تمت الإضافة";   
+      e.target.classList.add("added");
+
+      setTimeout(() => {
+        e.target.classList.remove("added");
+        e.target.textContent = originalText;    
+      }, 1500);
+    });
+  });
+});
+
+
+
+
+function openModal(id){
+  document.getElementById(id).style.display = "flex";
+}
+function closeModal(id){
+  document.getElementById(id).style.display = "none";
+}
+
+document.addEventListener("DOMContentLoaded", updateCartCount);
+
+</script>
+
+
+</head>
+<body>
+
+<header>
+<div class="logo">
+  <a href="index.html">
+    <img src="logo panstore.jpg.jpg" alt="Logo">
+  </a>
+</div>
+
+<div class="search-bar">
+  <input type="text" id="searchInput" placeholder="search...">
+  <button onclick="searchProduct()"></button>
+</div>
+
+
+<div class="icons">
+         <a href="cart.html" class="icon" title="السلة">
+             <img src="pngtree-shopping-cart-convenient-icon-image_1287807.jpg" width="24">
+             <span id="cartCount">0</span>
+         </a>
+</div>
+    <div class="icon"><img src="free-user-icon-3296-thumb.png" alt="user" width="24"></div>
+    <div class="icon" onclick="toggleLike()">
+      <img src="free-heart-icon-3510-thumb.png" alt="heart" width="24">
+      <span class="count" id="like-count">0</span>
+    </div>
+  </div>
+</header>
+
+
+
+<!-- ===== Cart Modal ===== -->
+<div id="cartModal" class="modal-overlay">
+  <div class="modal">
+    <button onclick="closeModal('cartModal')">&times;</button>
+    <h2>🛒 عربة التسوق</h2>
+    <p>السلة حالياً فارغة</p>
+  </div>
+</div>
+
+<!-- المنتجات -->
+<div class="products">
+  <div class="product-card">
+    <div class="product-image">
+      <a href="ezvize hc6.html" target="_blank">
+        <img src="ezviz h6c 1080 pro side pic.png" alt="ezviz h6c 1080 pro">
+      </a>
+    </div>
+    <div class="product-info">
+      <a href="ezvize hc6.html" target="_blank" class="product-link">
+        <h3>
+
+EZVIZ H6C 1080p Pro 
+
+</h3>
+      </a>
+      <p class="price">1150 جنيه</p>
+      <button class="btn cart-btn" onclick="addToCart(' ezviz h6c 1080 pro ', 1,150, 'ezviz h6c 1080 pro side pic.png')">
+  أضف إلى السلة
+      </button>
+      <a href="ezvize hc6.html" target="_blank" class="buy-btn">تفاصيل المنتج</a>
+    </div>
+  </div>
+
+<div class="product-card">
+    <div class="product-image">
+      <a href="skyworth h30p.html" target="_blank">
+        <img src="camera skyworth h30p.jpg" alt="skyworth h30p">
+      </a>
+    </div>
+    <div class="product-info">
+      <a href="skyworth h30p.html" target="_blank" class="product-link">
+        <h3> Skyworth H30P 
+
+</h3>
+      </a>
+      <p class="price">1000 جنيه</p>
+      <button class="btn cart-btn" onclick="addToCart('',1000, 'camera skyworth h30p.jpg')">
+  أضف إلى السلة
+</button>
+      <a href="skyworth h30p.html" target="_blank" class="buy-btn">تفاصيل المنتج</a>
+    </div>
+</div>
+
+
+  <div class="product-card">
+    <div class="product-image">
+      <a href="imou ranger 2 1080.html" target="_blank">
+        <img src="51OnKOKpSwL.jpg" alt="منتج 2">
+      </a>
+    </div>
+    <div class="product-info">
+      <a href="imou ranger 2 1080.html" target="_blank" class="product-link">
+        <h3> Imou Ranger 2 1080p 
+</h3>
+      </a>
+      <p class="price">1250 جنيه</p>
+      <a href="#" class="cart-btn">إضافة إلى العربة</a>
+      <a href="imou ranger 2 1080.html" target="_blank" class="buy-btn">تفاصيل المنتج</a>
+    </div>
+  </div>
+
+  <div class="product-card">
+    <div class="product-image">
+      <a href="imou ranger 2 5mp.html" target="_blank">
+        <img src="imou ranger 3 5MB.webp" alt="منتج 3">
+      </a>
+    </div>
+    <div class="product-info">
+      <a href="imou ranger 2 5mp.html" target="_blank" class="product-link">
+        <h3>
+Imou Ranger 2 – 5MP دقة Ultra HD + رؤية 360°
+</h3>
+      </a>
+      <p class="price">1.200 جنيه</p>
+      <a href="#" class="cart-btn">إضافة إلى العربة</a>
+      <a href="imou ranger 2 5mp.html" target="_blank" class="buy-btn">تفاصيل المنتج</a>
+    </div>
+  </div>
+
+  <div class="product-card">
+    <div class="product-image">
+      <a href="imou bullet 5mp.html" target="_blank">
+        <img src="1a9d8bcf-ef21-42cc-9d25-5dc616b75e6b.webp" alt="مimou bullet 5mp3">
+      </a>
+    </div>
+    <div class="product-info">
+      <a href="imou bullet 5mp.html" target="_blank" class="product-link">
+        <h3>  Imou Bullet 5MP  دقة Ultra HD + رؤية ليلية قوية
+</h3>
+      </a>
+      <p class="price">1.800 جنيه</p>
+      <a href="#" class="cart-btn">إضافة إلى العربة</a>
+      <a href="imou bullet 5mp.html" target="_blank" class="buy-btn">تفاصيل المنتج</a>
+    </div>
+</div>
+
+<div class="product-card">
+    <div class="product-image">
+      <a href="imou ranger mini 5mp.html" target="_blank">
+        <img src="2012dc0b-6d7b-4759-8a23-2be9947d6b82.webp" alt="imou ranger mini 5mp">
+      </a>
+    </div>
+    <div class="product-info">
+      <a href="imou ranger mini 5mp.html" target="_blank" class="product-link">
+        <h3> Imou Ranger Mini 5MP
+</h3>
+      </a>
+      <p class="price">1,600 جنيه</p>
+      <a href="#" class="cart-btn">إضافة إلى العربة</a>
+      <a href="imou ranger mini 5mp.html" target="_blank" class="buy-btn">تفاصيل المنتج</a>
+    </div>
+</div>
+
+<div class="product-card">
+    <div class="product-image">
+      <a href="imou crusier z 5mp.html" target="_blank">
+        <img src="imou-cruiser-z-5mp-2.jpg" alt="imou crusier z 5mp">
+      </a>
+    </div>
+    <div class="product-info">
+      <a href="imou crusier z 5mp.html" target="_blank" class="product-link">
+        <h3> Imou Cruiser Z 5MP
+</h3>
+      </a>
+      <p class="price">3.000 جنيه</p>
+      <a href="#" class="cart-btn">إضافة إلى العربة</a>
+      <a href="imou crusier z 5mp.html" target="_blank" class="buy-btn">تفاصيل المنتج</a>
+    </div>
+</div>
+
+
+<div class="product-card">
+    <div class="product-image">
+      <a href="imou crusier dual 2 6mp.html" target="_blank">
+        <img src="imou-imou-cruiser-dual-2-dual-lens-6mp-ai-vehicle.webp" alt="imou crusier z 5mp">
+      </a>
+    </div>
+    <div class="product-info">
+      <a href="imou crusier dual 2 6mp.html" target="_blank" class="product-link">
+        <h3> Imou Cruiser Dual 2 6MP
+</h3>
+      </a>
+      <p class="price">3.000 جنيه</p>
+      <a href="#" class="cart-btn">إضافة إلى العربة</a>
+      <a href="imou crusier dual 2 6mp.html" target="_blank" class="buy-btn">تفاصيل المنتج</a>
+    </div>
+</div>
+
+
+
+    <div class="product-card">
+    <div class="product-image">
+      <a href="imou crusier triple 11mp.html" target="_blank">
+        <img src="Cruiser-Triple-7.png.jpg" alt="imou crusier z 5mp">
+      </a>
+    </div>
+    <div class="product-info">
+      <a href="imou crusier triple 11mp.html" target="_blank" class="product-link">
+        <h3> Imou Cruiser Triple 11MP
+</h3>
+      </a>
+      <p class="price">4.500 جنيه</p>
+      <button class="btn cart-btn" onclick="addToCart('',4.500, 'Cruiser-Triple-7.png.jpg')">
+          أضف إلى السلة
+      </button>
+      <a href="imou crusier triple 11mp.html" target="_blank" class="buy-btn">تفاصيل المنتج</a>
+    </div>
+</body>
+</html>
